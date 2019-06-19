@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.NodeTypeDao">
+	
+	<select id="queryAll" resultType="com.jm.bean.NodeType">
+		select t1.*,t2.id,t2.empName FROM node_type t1 LEFT JOIN t_emp t2 ON t1.createUser=t2.empName   		
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and t1.createTime >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and t1.createTime <= #{endDate }    ]]>
+         </if>
+         <if test="name!=null and name!=''">
+             and t1.name like '%${name }%' 
+         </if>
+         </where>
+         order by t1.nId
+	</select>
+	
+	<insert id="addNodeType">
+		INSERT INTO node_type(nId,name,pinyin,desp,version,createUser,createTime) VALUES(#{nId},#{name},#{pinyin},#{desp},#{version},#{createUser},#{createTime})
+	</insert>
+	
+	<delete id="delNodeType">
+		DELETE FROM node_type where nId=#{nId}
+	</delete>
+	
+	<update id="editNodeType">
+		UPDATE node_type SET name=#{name},pinyin=#{pinyin},desp=#{desp},version=#{version},updateTime=#{updateTime} where nId=#{nId}
+	</update>
+	
+	<select id="queryById" resultType="com.jm.bean.NodeType">
+		select * FROM node_type where nId=#{nId}
+	</select>
+	
+	<select id="getAll" resultType="com.jm.bean.NodeType">
+		select * FROM node_type 
+	</select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,41 @@
+[{
+	"title" : "预检",
+	"icon" : "icon-computer",
+	"href" : "WEB-INF/views/main.jsp",
+	"spread" : false
+},{
+	"title" : "预检明细",
+	"icon" : "icon-text",
+	"href" : "WEB-INF/views/news/newsList.jsp",
+	"spread" : false
+},{
+	"title" : "预检实时数据",
+	"icon" : "&#xe64c;",
+	"href" : "WEB-INF/views/links/linksList.jsp",
+	"spread" : false
+},{
+	"title" : "预检删除明细",
+	"icon" : "&#xe631;",
+	"href" : "WEB-INF/views/systemParameter/systemParameter.jsp",
+	"spread" : false
+},{
+	"title" : "系统",
+	"icon" : "WEB-INF/&#xe630;",
+	"href" : "",
+	"spread" : false,
+	"children" : [
+		{
+			"title" : "404页面",
+			"icon" : "&#xe61c;",
+			"href" : "WEB-INF/views/404.html",
+			"spread" : false
+		},
+		{
+			"title" : "登录",
+			"icon" : "&#xe609;",
+			"href" : "WEB-INF/views/login.jsp",
+			"spread" : false,
+			"target" : "_blank"
+		}
+	]
+}]

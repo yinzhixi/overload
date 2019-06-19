@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.dao.AbnormalMapper" >
+  <resultMap id="BaseResultMap" type="com.jm.bean.Abnormal" >
+    <id column="abnormalId" property="abnormalid" jdbcType="INTEGER" />
+    <result column="dateTime" property="datetime" jdbcType="VARCHAR" />
+    <result column="lane" property="lane" jdbcType="INTEGER" />
+    <result column="vehicleType" property="vehicletype" jdbcType="VARCHAR" />
+    <result column="speed" property="speed" jdbcType="INTEGER" />
+    <result column="axleCnt" property="axlecnt" jdbcType="INTEGER" />
+    <result column="axleDis" property="axledis" jdbcType="INTEGER" />
+    <result column="direction" property="direction" jdbcType="TINYINT" />
+    <result column="sumWeight" property="sumweight" jdbcType="DOUBLE" />
+    <result column="carNum" property="carnum" jdbcType="VARCHAR" />
+    <result column="station" property="station" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="picbak" property="picbak" jdbcType="VARCHAR" />
+    <result column="movie" property="movie" jdbcType="VARCHAR" />
+    <result column="tonId" property="tonid" jdbcType="INTEGER" />
+    <result column="overLoadRate" property="overloadrate" jdbcType="INTEGER" />
+    <result column="overLoadId" property="overloadid" jdbcType="INTEGER" />
+    <result column="overRage" property="overrage" jdbcType="DOUBLE" />
+    <result column="recognition" property="recognition" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="venifyPreview" property="venifypreview" jdbcType="INTEGER" />
+    <result column="limitWeight" property="limitweight" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="stationId" property="stationid" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="TINYINT" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="day" property="day" jdbcType="INTEGER" />
+    <result column="axleWeight1" property="axleweight1" jdbcType="DOUBLE" />
+    <result column="axleWeight2" property="axleweight2" jdbcType="DOUBLE" />
+    <result column="axleWeight3" property="axleweight3" jdbcType="DOUBLE" />
+    <result column="axleWeight4" property="axleweight4" jdbcType="DOUBLE" />
+    <result column="axleWeight5" property="axleweight5" jdbcType="DOUBLE" />
+    <result column="axleWeight6" property="axleweight6" jdbcType="DOUBLE" />
+    <result column="axleWeight7" property="axleweight7" jdbcType="DOUBLE" />
+    <result column="axleWeight8" property="axleweight8" jdbcType="DOUBLE" />
+    <result column="checkNo" property="checkno" jdbcType="VARCHAR" />
+    <result column="platePic" property="platepic" jdbcType="VARCHAR" />
+    <result column="vedioPath" property="vediopath" jdbcType="VARCHAR" />
+    <result column="screenPic" property="screenpic" jdbcType="VARCHAR" />
+    <result column="snapScreen" property="snapscreen" jdbcType="TINYINT" />
+    <result column="timeFlowNo" property="timeflowno" jdbcType="VARCHAR" />
+    <result column="relCode" property="relcode" jdbcType="VARCHAR" />
+    <result column="stationMark" property="stationmark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    abnormalId, dateTime, lane, vehicleType, speed, axleCnt, axleDis, direction, sumWeight, 
+    carNum, station, length, width, height, picbak, movie, tonId, overLoadRate, overLoadId, 
+    overRage, recognition, date, venifyPreview, limitWeight, createTime, stationId, deleted, 
+    year, month, day, axleWeight1, axleWeight2, axleWeight3, axleWeight4, axleWeight5, 
+    axleWeight6, axleWeight7, axleWeight8, checkNo, platePic, vedioPath, screenPic, snapScreen, 
+    timeFlowNo, relCode, stationMark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_abnormal
+    where abnormalId = #{abnormalid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_abnormal
+    where abnormalId = #{abnormalid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jm.bean.Abnormal" >
+    insert into t_abnormal (abnormalId, dateTime, lane, 
+      vehicleType, speed, axleCnt, 
+      axleDis, direction, sumWeight, 
+      carNum, station, length, 
+      width, height, picbak, 
+      movie, tonId, overLoadRate, 
+      overLoadId, overRage, recognition, 
+      date, venifyPreview, limitWeight, 
+      createTime, stationId, deleted, 
+      year, month, day, axleWeight1, 
+      axleWeight2, axleWeight3, axleWeight4, 
+      axleWeight5, axleWeight6, axleWeight7, 
+      axleWeight8, checkNo, platePic, 
+      vedioPath, screenPic, snapScreen, 
+      timeFlowNo, relCode, stationMark
+      )
+    values (#{abnormalid,jdbcType=INTEGER}, #{datetime,jdbcType=VARCHAR}, #{lane,jdbcType=INTEGER}, 
+      #{vehicletype,jdbcType=VARCHAR}, #{speed,jdbcType=INTEGER}, #{axlecnt,jdbcType=INTEGER}, 
+      #{axledis,jdbcType=INTEGER}, #{direction,jdbcType=TINYINT}, #{sumweight,jdbcType=DOUBLE}, 
+      #{carnum,jdbcType=VARCHAR}, #{station,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, 
+      #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{picbak,jdbcType=VARCHAR}, 
+      #{movie,jdbcType=VARCHAR}, #{tonid,jdbcType=INTEGER}, #{overloadrate,jdbcType=INTEGER}, 
+      #{overloadid,jdbcType=INTEGER}, #{overrage,jdbcType=DOUBLE}, #{recognition,jdbcType=INTEGER}, 
+      #{date,jdbcType=VARCHAR}, #{venifypreview,jdbcType=INTEGER}, #{limitweight,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=VARCHAR}, #{stationid,jdbcType=INTEGER}, #{deleted,jdbcType=TINYINT}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{day,jdbcType=INTEGER}, #{axleweight1,jdbcType=DOUBLE}, 
+      #{axleweight2,jdbcType=DOUBLE}, #{axleweight3,jdbcType=DOUBLE}, #{axleweight4,jdbcType=DOUBLE}, 
+      #{axleweight5,jdbcType=DOUBLE}, #{axleweight6,jdbcType=DOUBLE}, #{axleweight7,jdbcType=DOUBLE}, 
+      #{axleweight8,jdbcType=DOUBLE}, #{checkno,jdbcType=VARCHAR}, #{platepic,jdbcType=VARCHAR}, 
+      #{vediopath,jdbcType=VARCHAR}, #{screenpic,jdbcType=VARCHAR}, #{snapscreen,jdbcType=TINYINT}, 
+      #{timeflowno,jdbcType=VARCHAR}, #{relcode,jdbcType=VARCHAR}, #{stationmark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jm.bean.Abnormal" >
+    insert into t_abnormal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="abnormalid != null" >
+        abnormalId,
+      </if>
+      <if test="datetime != null" >
+        dateTime,
+      </if>
+      <if test="lane != null" >
+        lane,
+      </if>
+      <if test="vehicletype != null" >
+        vehicleType,
+      </if>
+      <if test="speed != null" >
+        speed,
+      </if>
+      <if test="axlecnt != null" >
+        axleCnt,
+      </if>
+      <if test="axledis != null" >
+        axleDis,
+      </if>
+      <if test="direction != null" >
+        direction,
+      </if>
+      <if test="sumweight != null" >
+        sumWeight,
+      </if>
+      <if test="carnum != null" >
+        carNum,
+      </if>
+      <if test="station != null" >
+        station,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="picbak != null" >
+        picbak,
+      </if>
+      <if test="movie != null" >
+        movie,
+      </if>
+      <if test="tonid != null" >
+        tonId,
+      </if>
+      <if test="overloadrate != null" >
+        overLoadRate,
+      </if>
+      <if test="overloadid != null" >
+        overLoadId,
+      </if>
+      <if test="overrage != null" >
+        overRage,
+      </if>
+      <if test="recognition != null" >
+        recognition,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="venifypreview != null" >
+        venifyPreview,
+      </if>
+      <if test="limitweight != null" >
+        limitWeight,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="stationid != null" >
+        stationId,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="axleweight1 != null" >
+        axleWeight1,
+      </if>
+      <if test="axleweight2 != null" >
+        axleWeight2,
+      </if>
+      <if test="axleweight3 != null" >
+        axleWeight3,
+      </if>
+      <if test="axleweight4 != null" >
+        axleWeight4,
+      </if>
+      <if test="axleweight5 != null" >
+        axleWeight5,
+      </if>
+      <if test="axleweight6 != null" >
+        axleWeight6,
+      </if>
+      <if test="axleweight7 != null" >
+        axleWeight7,
+      </if>
+      <if test="axleweight8 != null" >
+        axleWeight8,
+      </if>
+      <if test="checkno != null" >
+        checkNo,
+      </if>
+      <if test="platepic != null" >
+        platePic,
+      </if>
+      <if test="vediopath != null" >
+        vedioPath,
+      </if>
+      <if test="screenpic != null" >
+        screenPic,
+      </if>
+      <if test="snapscreen != null" >
+        snapScreen,
+      </if>
+      <if test="timeflowno != null" >
+        timeFlowNo,
+      </if>
+      <if test="relcode != null" >
+        relCode,
+      </if>
+      <if test="stationmark != null" >
+        stationMark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="abnormalid != null" >
+        #{abnormalid,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lane != null" >
+        #{lane,jdbcType=INTEGER},
+      </if>
+      <if test="vehicletype != null" >
+        #{vehicletype,jdbcType=VARCHAR},
+      </if>
+      <if test="speed != null" >
+        #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="axlecnt != null" >
+        #{axlecnt,jdbcType=INTEGER},
+      </if>
+      <if test="axledis != null" >
+        #{axledis,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="sumweight != null" >
+        #{sumweight,jdbcType=DOUBLE},
+      </if>
+      <if test="carnum != null" >
+        #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="picbak != null" >
+        #{picbak,jdbcType=VARCHAR},
+      </if>
+      <if test="movie != null" >
+        #{movie,jdbcType=VARCHAR},
+      </if>
+      <if test="tonid != null" >
+        #{tonid,jdbcType=INTEGER},
+      </if>
+      <if test="overloadrate != null" >
+        #{overloadrate,jdbcType=INTEGER},
+      </if>
+      <if test="overloadid != null" >
+        #{overloadid,jdbcType=INTEGER},
+      </if>
+      <if test="overrage != null" >
+        #{overrage,jdbcType=DOUBLE},
+      </if>
+      <if test="recognition != null" >
+        #{recognition,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="venifypreview != null" >
+        #{venifypreview,jdbcType=INTEGER},
+      </if>
+      <if test="limitweight != null" >
+        #{limitweight,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        #{stationid,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=INTEGER},
+      </if>
+      <if test="axleweight1 != null" >
+        #{axleweight1,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight2 != null" >
+        #{axleweight2,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight3 != null" >
+        #{axleweight3,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight4 != null" >
+        #{axleweight4,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight5 != null" >
+        #{axleweight5,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight6 != null" >
+        #{axleweight6,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight7 != null" >
+        #{axleweight7,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight8 != null" >
+        #{axleweight8,jdbcType=DOUBLE},
+      </if>
+      <if test="checkno != null" >
+        #{checkno,jdbcType=VARCHAR},
+      </if>
+      <if test="platepic != null" >
+        #{platepic,jdbcType=VARCHAR},
+      </if>
+      <if test="vediopath != null" >
+        #{vediopath,jdbcType=VARCHAR},
+      </if>
+      <if test="screenpic != null" >
+        #{screenpic,jdbcType=VARCHAR},
+      </if>
+      <if test="snapscreen != null" >
+        #{snapscreen,jdbcType=TINYINT},
+      </if>
+      <if test="timeflowno != null" >
+        #{timeflowno,jdbcType=VARCHAR},
+      </if>
+      <if test="relcode != null" >
+        #{relcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationmark != null" >
+        #{stationmark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jm.bean.Abnormal" >
+    update t_abnormal
+    <set >
+      <if test="datetime != null" >
+        dateTime = #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="lane != null" >
+        lane = #{lane,jdbcType=INTEGER},
+      </if>
+      <if test="vehicletype != null" >
+        vehicleType = #{vehicletype,jdbcType=VARCHAR},
+      </if>
+      <if test="speed != null" >
+        speed = #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="axlecnt != null" >
+        axleCnt = #{axlecnt,jdbcType=INTEGER},
+      </if>
+      <if test="axledis != null" >
+        axleDis = #{axledis,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        direction = #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="sumweight != null" >
+        sumWeight = #{sumweight,jdbcType=DOUBLE},
+      </if>
+      <if test="carnum != null" >
+        carNum = #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="station != null" >
+        station = #{station,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="picbak != null" >
+        picbak = #{picbak,jdbcType=VARCHAR},
+      </if>
+      <if test="movie != null" >
+        movie = #{movie,jdbcType=VARCHAR},
+      </if>
+      <if test="tonid != null" >
+        tonId = #{tonid,jdbcType=INTEGER},
+      </if>
+      <if test="overloadrate != null" >
+        overLoadRate = #{overloadrate,jdbcType=INTEGER},
+      </if>
+      <if test="overloadid != null" >
+        overLoadId = #{overloadid,jdbcType=INTEGER},
+      </if>
+      <if test="overrage != null" >
+        overRage = #{overrage,jdbcType=DOUBLE},
+      </if>
+      <if test="recognition != null" >
+        recognition = #{recognition,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="venifypreview != null" >
+        venifyPreview = #{venifypreview,jdbcType=INTEGER},
+      </if>
+      <if test="limitweight != null" >
+        limitWeight = #{limitweight,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="stationid != null" >
+        stationId = #{stationid,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null" >
+        day = #{day,jdbcType=INTEGER},
+      </if>
+      <if test="axleweight1 != null" >
+        axleWeight1 = #{axleweight1,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight2 != null" >
+        axleWeight2 = #{axleweight2,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight3 != null" >
+        axleWeight3 = #{axleweight3,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight4 != null" >
+        axleWeight4 = #{axleweight4,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight5 != null" >
+        axleWeight5 = #{axleweight5,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight6 != null" >
+        axleWeight6 = #{axleweight6,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight7 != null" >
+        axleWeight7 = #{axleweight7,jdbcType=DOUBLE},
+      </if>
+      <if test="axleweight8 != null" >
+        axleWeight8 = #{axleweight8,jdbcType=DOUBLE},
+      </if>
+      <if test="checkno != null" >
+        checkNo = #{checkno,jdbcType=VARCHAR},
+      </if>
+      <if test="platepic != null" >
+        platePic = #{platepic,jdbcType=VARCHAR},
+      </if>
+      <if test="vediopath != null" >
+        vedioPath = #{vediopath,jdbcType=VARCHAR},
+      </if>
+      <if test="screenpic != null" >
+        screenPic = #{screenpic,jdbcType=VARCHAR},
+      </if>
+      <if test="snapscreen != null" >
+        snapScreen = #{snapscreen,jdbcType=TINYINT},
+      </if>
+      <if test="timeflowno != null" >
+        timeFlowNo = #{timeflowno,jdbcType=VARCHAR},
+      </if>
+      <if test="relcode != null" >
+        relCode = #{relcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationmark != null" >
+        stationMark = #{stationmark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where abnormalId = #{abnormalid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jm.bean.Abnormal" >
+    update t_abnormal
+    set dateTime = #{datetime,jdbcType=VARCHAR},
+      lane = #{lane,jdbcType=INTEGER},
+      vehicleType = #{vehicletype,jdbcType=VARCHAR},
+      speed = #{speed,jdbcType=INTEGER},
+      axleCnt = #{axlecnt,jdbcType=INTEGER},
+      axleDis = #{axledis,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=TINYINT},
+      sumWeight = #{sumweight,jdbcType=DOUBLE},
+      carNum = #{carnum,jdbcType=VARCHAR},
+      station = #{station,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      picbak = #{picbak,jdbcType=VARCHAR},
+      movie = #{movie,jdbcType=VARCHAR},
+      tonId = #{tonid,jdbcType=INTEGER},
+      overLoadRate = #{overloadrate,jdbcType=INTEGER},
+      overLoadId = #{overloadid,jdbcType=INTEGER},
+      overRage = #{overrage,jdbcType=DOUBLE},
+      recognition = #{recognition,jdbcType=INTEGER},
+      date = #{date,jdbcType=VARCHAR},
+      venifyPreview = #{venifypreview,jdbcType=INTEGER},
+      limitWeight = #{limitweight,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=VARCHAR},
+      stationId = #{stationid,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=TINYINT},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      day = #{day,jdbcType=INTEGER},
+      axleWeight1 = #{axleweight1,jdbcType=DOUBLE},
+      axleWeight2 = #{axleweight2,jdbcType=DOUBLE},
+      axleWeight3 = #{axleweight3,jdbcType=DOUBLE},
+      axleWeight4 = #{axleweight4,jdbcType=DOUBLE},
+      axleWeight5 = #{axleweight5,jdbcType=DOUBLE},
+      axleWeight6 = #{axleweight6,jdbcType=DOUBLE},
+      axleWeight7 = #{axleweight7,jdbcType=DOUBLE},
+      axleWeight8 = #{axleweight8,jdbcType=DOUBLE},
+      checkNo = #{checkno,jdbcType=VARCHAR},
+      platePic = #{platepic,jdbcType=VARCHAR},
+      vedioPath = #{vediopath,jdbcType=VARCHAR},
+      screenPic = #{screenpic,jdbcType=VARCHAR},
+      snapScreen = #{snapscreen,jdbcType=TINYINT},
+      timeFlowNo = #{timeflowno,jdbcType=VARCHAR},
+      relCode = #{relcode,jdbcType=VARCHAR},
+      stationMark = #{stationmark,jdbcType=VARCHAR}
+    where abnormalId = #{abnormalid,jdbcType=INTEGER}
+  </update>
+
+  <!-- 	预检明细首页展示 -->
+  <select id="getAlls" resultMap="BaseResultMap">
+    select c.* from (select t1.*,t2.* from t_abnormal t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName
+    <where>
+      t1.deleted = 0
+      <if test="startDate!=null and startDate!=''">
+        <![CDATA[  and t1.dateTime >= #{startDate }    ]]>
+      </if>
+      <if test="endDate!=null and endDate!=''">
+        <![CDATA[  and t1.dateTime <= #{endDate }    ]]>
+      </if>
+      <if test="station!=null and station!=''">
+        and t1.station =#{station}
+      </if>
+      <if test="lane !=null and lane !=''">
+        and t1.lane=#{lane }
+      </if>
+      <if test="carNum!=null and carNum!=''">
+        and t1.carNum like '%${carNum }%'
+      </if>
+
+      <if test="axleCnt != null and axleCnt_op != null">
+        <if test="axleCnt_op == 0">
+          <![CDATA[ and t1.axleCnt > #{axleCnt } ]]>
+        </if>
+        <if test="axleCnt_op == 1">
+          <![CDATA[ and t1.axleCnt < #{axleCnt } ]]>
+        </if>
+        <if test="axleCnt_op == 2">
+          <![CDATA[ and t1.axleCnt >= #{axleCnt } ]]>
+        </if>
+        <if test="axleCnt_op == 3">
+          <![CDATA[ and t1.axleCnt <= #{axleCnt } ]]>
+        </if>
+        <if test="axleCnt_op == 4">
+          <![CDATA[ and t1.axleCnt = #{axleCnt } ]]>
+        </if>
+      </if>
+
+      <if test="overRate !=null ">
+        and t1.overLoadId = #{overRate }
+      </if>
+
+      <if test="recognition !=null ">
+        and t1.recognition = #{recognition }
+      </if>
+
+      <if test="direction !=null ">
+        and t1.direction = #{direction }
+      </if>
+
+      <if test="previewId !=null ">
+        and t1.previewId = #{previewId }
+      </if>
+
+      <if test="startWeight != null">
+        <![CDATA[ and t1.sumWeight >= #{startWeight } ]]>
+      </if>
+      <if test="endWeight != null">
+        <![CDATA[ and t1.sumWeight <= #{endWeight } ]]>
+      </if>
+
+      <if test="overRate_op != null and overRate_num != null">
+        <if test="overRate_op == 0">
+          <![CDATA[ and t1.overLoadRate > #{overRate_num } ]]>
+        </if>
+        <if test="overRate_op == 1">
+          <![CDATA[ and t1.overLoadRate < #{overRate_num } ]]>
+        </if>
+        <if test="overRate_op == 2">
+          <![CDATA[ and t1.overLoadRate >= #{overRate_num } ]]>
+        </if>
+        <if test="overRate_op == 3">
+          <![CDATA[ and t1.overLoadRate <= #{overRate_num } ]]>
+        </if>
+        <if test="overRate_op == 4">
+          <![CDATA[ and t1.overLoadRate = #{overRate_num } ]]>
+        </if>
+      </if>
+      <if test="station==null or station==''">
+        and t1.stationMark IN
+        <foreach collection="userStationCodes" item="stationMark" index="index"
+                 open="(" close=")" separator=",">
+          #{stationMark}
+        </foreach>
+      </if>
+    </where>
+    order by abnormalId desc LIMIT 65000) c
+  </select>
+
+  <!-- 删除异常车辆 -->
+  <delete id="delAbnormal">
+         update t_abnormal set deleted = 1 where abnormalId=#{abnormalid}
+  </delete>
+</mapper>

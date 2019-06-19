@@ -1,0 +1,11 @@
+INSERT INTO `jm`.`t_menu` (`menuId`, `parentId`, `menuLevel`, `sort`, `name`, `path`, `icon`, `addTime`, `updateTime`) VALUES ('30', '10', '2', '11', '实时数据', '/flowView/realTimeData', '', '2019-01-14 16:57:05', '2019-01-14 16:57:05');
+INSERT INTO `jm`.`t_systemset` (`id`, `key`, `val`, `comment`) VALUES ('19', 'preview.pageSize', '8', NULL);
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('preview.filter', '(.*)[蓝,白,绿](.*)', '实时数据过滤正则表达式 例如：(.*)[蓝,白,绿](.*)');
+ALTER TABLE `jm`.`t_previewafter_preview` 
+ADD COLUMN `cardPic` VARCHAR(100) NULL AFTER `checkNo`,
+ADD COLUMN `vedioPath` VARCHAR(100) NULL AFTER `cardPic`;
+ALTER TABLE `jm`.`t_previewafter_preview` 
+CHANGE COLUMN `cardPic` `platePic` VARCHAR(100) NULL DEFAULT NULL ,
+ADD COLUMN `screenPic` VARCHAR(100) NULL AFTER `vedioPath`;
+ALTER TABLE `jm`.`t_previewafter_preview` 
+ADD COLUMN `snapScreen` TINYINT NULL AFTER `screenPic`;

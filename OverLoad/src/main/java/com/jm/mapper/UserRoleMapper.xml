@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.UserRoleDao">
+
+	<delete id="delUserRole">
+		DELETE from t_user_role WHERE role_id = #{roleId}
+	</delete>
+        
+     <!-- 查询信息 -->
+     <select id="get2" resultType="com.jm.bean.UserRole">
+         select emp_name empName,role_id roleId
+        from t_user_role 
+       	 where emp_name=#{empName} AND role_id=#{roleId}
+     </select>
+     
+    <!-- 新增信息 -->
+     <insert id="add2" >
+     	insert into t_user_role(emp_name,role_id) values(#{empName},#{roleId})
+    </insert> 
+    
+    <!-- 删除 -->
+      <delete id="del2">
+         delete from t_user_role  where emp_name =#{empName} AND role_id=#{roleId}
+     </delete> 
+     
+     
+     <update id="assignAllRole">
+        insert into t_user_role(emp_name,role_id) 
+        select #{empName},id from t_role
+     </update>
+     
+     <update id="cancleAllRole">
+        delete from t_user_role where emp_name = #{empName}
+     </update>
+	
+</mapper>

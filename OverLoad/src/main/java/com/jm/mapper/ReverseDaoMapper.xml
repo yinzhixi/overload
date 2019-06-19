@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.ReverseDao">
+
+	<select id="queryReverse" resultType="Reverse">
+		SELECT distinct `t_reverse`.`createTime`,
+        `t_reverse`.`snapTime`,
+        `t_reverse`.`lane`,
+        `t_reverse`.`frontPic`,
+        `t_reverse`.`carNum`,
+        `t_reverse`.`stationName`
+         from t_reverse 
+		<where>
+         <if test="stationName !=null and stationName !=''">
+	         and stationName=#{stationName }
+	     </if>
+         <if test="carNum!=null and carNum!=''">
+             and carNum like concat(concat('%',#{carNum}),'%')
+         </if>
+         <if test="maxId != null">
+             and previewId > #{maxId }
+         </if>
+	     </where>
+	    ORDER BY id DESC
+	</select>
+    
+    <select id="queryMaxId" resultType="int">
+    select max(id) from t_reverse 
+    </select>
+    <select id="reverseList" resultType="Reverse">
+        SELECT
+            id,
+            createTime,
+            snapTime,
+            lane,
+            frontPic,
+            carNum,
+            stationName
+        FROM
+            t_reverse
+        <where>
+            <if test="stationName !=null and stationName !=''">
+                and stationName=#{stationName }
+            </if>
+            <if test="carNum!=null and carNum!=''">
+                and carNum like concat(concat('%',#{carNum}),'%')
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                <![CDATA[  and createTime >= #{startDate }    ]]>
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                <![CDATA[  and createTime <= #{endDate }    ]]>
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="reversById" resultType="Reverse">
+        select * from t_reverse
+        <where>
+            <if test="id !=null and id !=''">
+                id=#{id}
+            </if>
+        </where>
+    </select>
+    <delete id="reverseDel">
+        delete from t_reverse
+        <where>
+            <if test="id !=null and id !=''">
+                id=#{id}
+            </if>
+        </where>
+    </delete>
+</mapper>

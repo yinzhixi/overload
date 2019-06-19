@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.CalcScheduleDao">
+    
+    <select id="findFromDate" resultType="java.lang.String">
+        SELECT fromDate FROM s_step_mark limit 1
+    </select>
+    
+    <select id="del_calc_s_ton" >
+        delete from s_ton where date >= #{fromDate }
+    </select>
+    
+    <select id="calc_s_ton" >
+        insert into s_ton (`date`,stationId,tonId,num)
+        (select date ,stationId,tonId,count(previewId) 
+        from t_preview 
+        where deleted = 0 and date >= #{fromDate }
+        group by date,stationId,tonId)
+    </select>
+    
+    <select id="del_calc_s_over" >
+        delete from s_over where date >= #{fromDate }
+    </select>
+    
+    <select id="calc_s_over" >
+        insert into s_over (`date`,stationId,overId,num)
+        (select date ,stationId,overLoadId,count(previewId) 
+        from t_preview 
+        where date >= #{fromDate }
+        group by date,stationId,overLoadId)
+    </select>
+    
+    <select id="del_calc_s_recg" >
+        delete from s_recg where date >= #{fromDate } 
+    </select>
+    
+    <select id="calc_s_recg" >
+    <![CDATA[
+        insert into s_recg(`date`,stationId,lane,dayNum,nightNum,dayNum_r,nightNum_r) 
+        ( SELECT date,stationId,lane,
+        sum(case when hour(dateTime) >6 and hour(dateTime) <= 18 then 1 else 0 end ) d_totalNum,
+        sum(case when hour(dateTime) <=6 or hour(dateTime) > 18 then 1 else 0 end) n_totalNum,
+        sum(case when hour(dateTime) >6 and hour(dateTime) <= 18 and carNum is not null and carNum != '' then 1 else 0 end ) d_num,
+        sum(case when (hour(dateTime) <=6 or hour(dateTime) > 18) and carNum is not null and carNum != '' then 1 else 0 end) n_num
+        from t_preview 
+        where date >= #{fromDate }
+        group by date,stationId,lane)
+        ]]>
+    </select>
+
+    <select id="del_calc_s_hour" >
+        delete from s_hour where date >= #{fromDate }
+    </select>
+    
+    <select id="calc_s_hour" >
+        insert into s_hour (`date`,stationId,hour,num)
+        (select date ,stationId,hour(dateTime),count(previewId) 
+        from t_preview 
+        where date >= #{fromDate }
+        group by date,stationId,hour(dateTime))
+    </select>
+    
+    <select id="del_calc_s_cartype" >
+        delete from s_cartype where date >= #{fromDate }
+    </select>
+    
+    <select id="calc_s_cartype" >
+        insert into s_cartype (`date`,stationId,cartype,num,olNum)
+        (select date ,stationId,vehicleType,count(previewId) ,sum(case WHEN overRage > 0 THEN 1 ELSE 0 END )
+        from t_preview 
+        where date >= #{fromDate }
+        group by date,stationId,vehicleType)
+    </select>
+    
+    
+	<resultMap type="com.jm.bean.PreviewCalc" id="a1">
+		<result column="date" property="date"/><!-- 日期 -->
+		<result column="vehicleType" property="vehicle"/><!-- 车型 -->
+		<result column="totalNum" property="totalNum"/><!-- 总数 -->
+		<result column="overNum" property="overNum"/><!-- 超限总数 -->
+	</resultMap>
+
+	<select id="previewCalc" resultMap="a1">
+		SELECT date ,vehicleType, count(previewId) totalNum,sum(case WHEN overRage >0 THEN 1 ELSE 0 END ) overNum FROM t_preview 
+		<where>
+        deleted = 0  
+		<if test="startDate!=null and startDate!=''">
+	         <![CDATA[  and date >= #{startDate }    ]]>
+	     </if>
+	     <if test="endDate!=null and endDate!=''">
+	         <![CDATA[  and date <= #{endDate }    ]]>
+	     </if>
+	     <if test="station!=null and station!=''">
+	         and station=#{station }
+	     </if>
+	     </where>
+	    GROUP BY date,vehicleType
+	</select>
+
+    <update id="updateFromDate">
+        update s_step_mark set fromDate =#{fromDate}
+     </update>
+    
+
+    <resultMap type="com.jm.bean.PreviewCalcByWeight" id="a2">
+        <result column="ton" property="ton"/><!-- 吨位 -->
+        <result column="tonNum" property="tonNum"/><!-- 吨位数量 -->
+    </resultMap>
+
+    <select id="previewCalcByWeight" resultMap="a2">
+        SELECT t_preview.tonId ,t_ton.tonRegion ton, count(t_preview.previewId) tonNum
+        FROM t_preview 
+        LEFT JOIN t_ton on t_ton.tonId = t_preview.tonId 
+        <where>
+        deleted = 0 
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and t_preview.date >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and t_preview.date <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and t_preview.station=#{station }
+         </if>
+         </where>
+        GROUP BY t_preview.tonId,t_ton.tonRegion ORDER BY t_preview.tonId
+    </select>
+    
+    <resultMap type="com.jm.bean.PreviewCalcByWeight" id="a3">
+        <result column="tonId" property="ton"/><!-- 吨位 -->
+        <result column="tonNum" property="tonNum"/><!-- 吨位数量 -->
+    </resultMap>
+
+    <select id="previewCalcByTon" resultMap="a3">
+        SELECT tonId ,sum(num) tonNum
+        FROM s_ton 
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and date >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and date <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and stationId=#{station }
+         </if>
+         </where>
+        GROUP BY tonId ORDER BY tonId
+    </select>
+    
+    <resultMap type="com.jm.bean.PreviewCalcByOverPercent" id="a4">
+        <result column="overId" property="overLoadId"/><!-- 超限率Id -->
+        <result column="num" property="num"/><!--  -->
+        <result column="name" property="name"/><!--  -->
+        
+    </resultMap>
+
+    <select id="previewCalcByOverPercent" resultMap="a4">
+        SELECT p.overId ,ov.overLoadRateRegion name, sum(num) num
+        FROM s_over p inner join t_overloadrate ov on ov.overLoadId = p.overId
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and p.date >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and p.date <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and p.stationId=#{station }
+         </if>
+         </where>
+        GROUP BY p.overId,ov.overLoadRateRegion ORDER BY p.overLoadId
+    </select>
+    
+    <resultMap type="com.jm.bean.PreviewCalcByRecognitionRate" id="a5">
+        <result column="lane" property="lane"/>
+        <result column="d_totalNum" property="d_totalNum"/><!--  -->
+        <result column="d_num" property="d_num"/><!--  -->
+        <result column="n_totalNum" property="n_totalNum"/><!--  -->
+        <result column="n_num" property="n_num"/><!--  -->
+    </resultMap>
+
+    <select id="previewCalcByRecognitionRate" resultMap="a5">
+        <![CDATA[
+        SELECT lane,
+         dayNum d_totalNum,
+         nightNum n_totalNum,
+         dayNum_r d_num,
+         nightNum_r n_num
+        from s_recg 
+        ]]>
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and date >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and date <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and stationId=#{station }
+         </if>
+         </where>
+        GROUP BY lane ORDER BY lane
+    </select>
+    
+    <resultMap type="com.jm.bean.PreviewCalcByHour" id="a6">
+        <result column="_hour" property="hour"/>
+        <result column="num" property="num"/><!--  -->
+    </resultMap>
+
+    <select id="previewCalcByHour" resultMap="a6">
+        select hour _hour,sum(num) num
+        from s_hour
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and date >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and date <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and stationId=#{station }
+         </if>
+         </where>
+        GROUP BY hour order by hour
+    </select>
+    
+</mapper>

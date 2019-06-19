@@ -1,0 +1,1 @@
+mysqldump -h127.0.0.1 -P3306 -uroot -p123456 -database jm | gzip db20181208.sql.gz

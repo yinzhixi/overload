@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.NodeDao">
+	
+	<select id="queryAll" resultType="com.jm.bean.Node">
+		select t1.*,t2.nId,t2.name FROM node t1 LEFT JOIN node_type t2 ON t1.nId=t2.nId     		
+        <where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and t1.createTime >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and t1.createTime <= #{endDate }    ]]>
+         </if>
+         <if test="nodeName !=null and nodeName !=''">
+             and t1.nodeName like '%${nodeName }%' 
+         </if>
+		 <if test="stationCodes!=null">
+				and stationCode IN
+				<foreach collection="stationCodes" item="stationCode" index="index"
+						 open="(" close=")" separator=",">
+					#{stationCode}
+				</foreach>
+		 </if>
+         </where>
+         order by t1.id
+	</select>
+
+	<select id="queryAllByUser" resultType="com.jm.bean.Node">
+		select t1.*,t2.nId,t2.name FROM node t1 LEFT JOIN node_type t2 ON t1.nId=t2.nId
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				<![CDATA[  and t1.createTime >= #{startDate }    ]]>
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[  and t1.createTime <= #{endDate }    ]]>
+			</if>
+			<if test="nodeName !=null and nodeName !=''">
+				and t1.nodeName like '%${nodeName }%'
+			</if>
+            <if test="stationId !=null and stationId !=''">
+                and t1.stationId = #{stationId }
+            </if>
+		</where>
+		order by t1.id
+	</select>
+
+	<insert id="addNode">
+		INSERT INTO node(nodeCode,nodeName,pinyin,online,lat,lon,`key`,createUser,nId,createTime,stationId,stationCode) VALUES(#{nodeCode},#{nodeName},#{pinyin},#{online},#{lat},#{lon},#{key},#{createUser},#{nId},now(),#{stationId},#{stationCode})
+	</insert>
+
+	
+	<delete id="delNode">
+		DELETE FROM node where id=#{id}
+	</delete>
+	
+	<select id="getById" resultType="Node">
+		select * FROM node WHERE id=#{id}
+	</select>
+	
+	 <update id="editNode">
+		UPDATE node
+		 <set>
+			 <if test="nodeName != null">nodeName=#{nodeName},</if>
+			 <if test="pinyin != null">pinyin=#{pinyin},</if>
+			 <if test="lat != null">lat=#{lat},</if>
+			 <if test="key != null">key=#{key},</if>
+			 <if test="createUser != null">createUser=#{createUser},</if>
+			 <if test="nId != null">nId=#{nId}</if>
+		 </set>
+		  where id=#{id}
+	</update> 
+	
+	<delete id="delAllNodeById">
+			DELETE FROM node where nId=#{nId}
+	</delete>
+	
+</mapper>

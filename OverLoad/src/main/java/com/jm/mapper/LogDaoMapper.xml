@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.LogDao">
+    <!-- 新增信息 -->
+    <insert id="addLog" parameterType="com.jm.bean.LogEntity">
+    INSERT INTO t_log_req
+        (id,
+        userId,
+        module,
+        method,
+        useTime,
+        ip,
+        userAgent,
+        url,
+        param,
+        host,
+        port,
+        reqTime,
+        description)
+        VALUES
+        (#{id},
+        #{userId},
+        #{module},
+        #{method},
+        #{useTime},
+        #{ip},
+        #{userAgent},
+        #{url},
+        #{param},
+        #{host},
+        #{port},
+        #{reqTime},
+        #{description})
+    </insert>
+    
+     <!-- 多条件查找 -->
+    <select id="findList" resultType="com.jm.bean.LogEntity">
+        SELECT id,
+            userId,
+            module,
+            method,
+            useTime,
+            ip,
+            userAgent,
+            url,
+            param,
+            host,
+            port,
+            reqTime,
+            description
+        FROM t_log_req
+         <where>
+              <if test="userId != '' and userId != null">
+                  and userId like concat(concat('%',#{userId}),'%')
+              </if>
+              <if test="module != '' and module != null">
+                  and module like concat(concat('%',#{module}),'%')
+              </if>
+              <if test="method != '' and method != null">
+                  and method like concat(concat('%',#{method}),'%')
+              </if>
+         </where>
+         order by reqTime desc
+    </select>
+</mapper>

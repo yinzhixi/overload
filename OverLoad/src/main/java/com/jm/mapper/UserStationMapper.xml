@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.UserStationDao">
+        
+     <!-- 查询信息 -->
+     <select id="getByEmpId" resultType="com.jm.bean.UserStation">
+         select userId,stationId,stationCode
+        from t_user_station
+         <where>
+             <if test="userId!=null and userId!=''">
+                 userId=#{userId}
+             </if>
+         </where>
+     </select>
+
+    <select id="userStationCount" resultType="Integer">
+        select count(1) from t_user_station where userId=#{userId} and stationId=#{stationId}
+    </select>
+
+    <!-- 新增信息 -->
+     <insert id="add" >
+     	insert into t_user_station
+         <trim prefix="(" suffix=")" suffixOverrides="," >
+             <if test="userId != null" >
+                 userId,
+             </if>
+             <if test="stationId != null" >
+                 stationId,
+             </if>
+             <if test="stationCode != null" >
+                 stationCode
+             </if>
+         </trim>
+         <trim prefix="values (" suffix=")" suffixOverrides="," >
+             <if test="userId != null" >
+                 #{userId,jdbcType=INTEGER},
+             </if>
+             <if test="stationId != null" >
+                 #{stationId,jdbcType=INTEGER},
+             </if>
+             <if test="stationCode != null" >
+                 #{stationCode,jdbcType=VARCHAR},
+             </if>
+         </trim>
+    </insert> 
+    
+    <!-- 删除 -->
+      <delete id="del">
+         delete from t_user_station  where userId =#{userId} AND stationId=#{stationId}
+     </delete>
+    <update id="assignAllStation">
+        insert into t_user_node(empId,nodeCode)
+        select #{empId},id from node
+     </update>
+
+     <update id="cancleAllStation">
+        delete from t_user_station where userId = #{userId}
+     </update>
+	
+</mapper>

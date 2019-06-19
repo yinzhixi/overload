@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.dao.CameraDao" >
+  <resultMap id="BaseResultMap" type="com.jm.bean.Camera" >
+    <id column="flow_no" property="flowNo" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="camera_dir" property="cameraDir" jdbcType="TINYINT" />
+    <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+    <result column="match_no" property="matchNo" jdbcType="VARCHAR" />
+    <result column="plate_num" property="plateNum" jdbcType="VARCHAR" />
+    <result column="entire_believe" property="entireBelieve" jdbcType="TINYINT" />
+    <result column="plate_type" property="plateType" jdbcType="TINYINT" />
+    <result column="plate_color" property="plateColor" jdbcType="SMALLINT" />
+    <result column="color_depth" property="colorDepth" jdbcType="TINYINT" />
+    <result column="color" property="color" jdbcType="TINYINT" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="lane" property="lane" jdbcType="TINYINT" />
+    <result column="vehicle_type" property="vehicleType" jdbcType="TINYINT" />
+    <result column="speed" property="speed" jdbcType="INTEGER" />
+    <result column="direction" property="direction" jdbcType="TINYINT" />
+    <result column="vehicle_logo_recog" property="vehicleLogoRecog" jdbcType="SMALLINT" />
+    <result column="illegal_type" property="illegalType" jdbcType="TINYINT" />
+    <result column="attachment_no" property="attachmentNo" jdbcType="VARCHAR" />
+    <result column="date_time" property="dateTime" jdbcType="VARCHAR" />
+    <result column="pic_num" property="picNum" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    flow_no, device_id, camera_dir, station_id, match_no, plate_num, entire_believe, 
+    plate_type, plate_color, color_depth, color, length, width, height, lane, vehicle_type, 
+    speed, direction, vehicle_logo_recog, illegal_type, attachment_no, date_time, pic_num, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from odt_vehicle_camera
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from odt_vehicle_camera
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jm.bean.Camera" >
+    insert into odt_vehicle_camera (flow_no, device_id, camera_dir, 
+      station_id, match_no, plate_num, 
+      entire_believe, plate_type, plate_color, 
+      color_depth, color, length, 
+      width, height, lane, 
+      vehicle_type, speed, direction, 
+      vehicle_logo_recog, illegal_type, attachment_no, 
+      date_time, pic_num, create_time
+      )
+    values (#{flowNo,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{cameraDir,jdbcType=TINYINT}, 
+      #{stationId,jdbcType=VARCHAR}, #{matchNo,jdbcType=VARCHAR}, #{plateNum,jdbcType=VARCHAR}, 
+      #{entireBelieve,jdbcType=TINYINT}, #{plateType,jdbcType=TINYINT}, #{plateColor,jdbcType=SMALLINT}, 
+      #{colorDepth,jdbcType=TINYINT}, #{color,jdbcType=TINYINT}, #{length,jdbcType=INTEGER}, 
+      #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{lane,jdbcType=TINYINT}, 
+      #{vehicleType,jdbcType=TINYINT}, #{speed,jdbcType=INTEGER}, #{direction,jdbcType=TINYINT}, 
+      #{vehicleLogoRecog,jdbcType=SMALLINT}, #{illegalType,jdbcType=TINYINT}, #{attachmentNo,jdbcType=VARCHAR}, 
+      #{dateTime,jdbcType=VARCHAR}, #{picNum,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jm.bean.Camera" >
+    insert into odt_vehicle_camera
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flowNo != null" >
+        flow_no,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="cameraDir != null" >
+        camera_dir,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="matchNo != null" >
+        match_no,
+      </if>
+      <if test="plateNum != null" >
+        plate_num,
+      </if>
+      <if test="entireBelieve != null" >
+        entire_believe,
+      </if>
+      <if test="plateType != null" >
+        plate_type,
+      </if>
+      <if test="plateColor != null" >
+        plate_color,
+      </if>
+      <if test="colorDepth != null" >
+        color_depth,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="width != null" >
+        width,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="lane != null" >
+        lane,
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type,
+      </if>
+      <if test="speed != null" >
+        speed,
+      </if>
+      <if test="direction != null" >
+        direction,
+      </if>
+      <if test="vehicleLogoRecog != null" >
+        vehicle_logo_recog,
+      </if>
+      <if test="illegalType != null" >
+        illegal_type,
+      </if>
+      <if test="attachmentNo != null" >
+        attachment_no,
+      </if>
+      <if test="dateTime != null" >
+        date_time,
+      </if>
+      <if test="picNum != null" >
+        pic_num,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flowNo != null" >
+        #{flowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cameraDir != null" >
+        #{cameraDir,jdbcType=TINYINT},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="matchNo != null" >
+        #{matchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNum != null" >
+        #{plateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entireBelieve != null" >
+        #{entireBelieve,jdbcType=TINYINT},
+      </if>
+      <if test="plateType != null" >
+        #{plateType,jdbcType=TINYINT},
+      </if>
+      <if test="plateColor != null" >
+        #{plateColor,jdbcType=SMALLINT},
+      </if>
+      <if test="colorDepth != null" >
+        #{colorDepth,jdbcType=TINYINT},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=TINYINT},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="lane != null" >
+        #{lane,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleType != null" >
+        #{vehicleType,jdbcType=TINYINT},
+      </if>
+      <if test="speed != null" >
+        #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleLogoRecog != null" >
+        #{vehicleLogoRecog,jdbcType=SMALLINT},
+      </if>
+      <if test="illegalType != null" >
+        #{illegalType,jdbcType=TINYINT},
+      </if>
+      <if test="attachmentNo != null" >
+        #{attachmentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="picNum != null" >
+        #{picNum,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jm.bean.Camera" >
+    update odt_vehicle_camera
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cameraDir != null" >
+        camera_dir = #{cameraDir,jdbcType=TINYINT},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="matchNo != null" >
+        match_no = #{matchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNum != null" >
+        plate_num = #{plateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entireBelieve != null" >
+        entire_believe = #{entireBelieve,jdbcType=TINYINT},
+      </if>
+      <if test="plateType != null" >
+        plate_type = #{plateType,jdbcType=TINYINT},
+      </if>
+      <if test="plateColor != null" >
+        plate_color = #{plateColor,jdbcType=SMALLINT},
+      </if>
+      <if test="colorDepth != null" >
+        color_depth = #{colorDepth,jdbcType=TINYINT},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=TINYINT},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="lane != null" >
+        lane = #{lane,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type = #{vehicleType,jdbcType=TINYINT},
+      </if>
+      <if test="speed != null" >
+        speed = #{speed,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null" >
+        direction = #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="vehicleLogoRecog != null" >
+        vehicle_logo_recog = #{vehicleLogoRecog,jdbcType=SMALLINT},
+      </if>
+      <if test="illegalType != null" >
+        illegal_type = #{illegalType,jdbcType=TINYINT},
+      </if>
+      <if test="attachmentNo != null" >
+        attachment_no = #{attachmentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        date_time = #{dateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="picNum != null" >
+        pic_num = #{picNum,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jm.bean.Camera" >
+    update odt_vehicle_camera
+    set device_id = #{deviceId,jdbcType=VARCHAR},
+      camera_dir = #{cameraDir,jdbcType=TINYINT},
+      station_id = #{stationId,jdbcType=VARCHAR},
+      match_no = #{matchNo,jdbcType=VARCHAR},
+      plate_num = #{plateNum,jdbcType=VARCHAR},
+      entire_believe = #{entireBelieve,jdbcType=TINYINT},
+      plate_type = #{plateType,jdbcType=TINYINT},
+      plate_color = #{plateColor,jdbcType=SMALLINT},
+      color_depth = #{colorDepth,jdbcType=TINYINT},
+      color = #{color,jdbcType=TINYINT},
+      length = #{length,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      lane = #{lane,jdbcType=TINYINT},
+      vehicle_type = #{vehicleType,jdbcType=TINYINT},
+      speed = #{speed,jdbcType=INTEGER},
+      direction = #{direction,jdbcType=TINYINT},
+      vehicle_logo_recog = #{vehicleLogoRecog,jdbcType=SMALLINT},
+      illegal_type = #{illegalType,jdbcType=TINYINT},
+      attachment_no = #{attachmentNo,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=VARCHAR},
+      pic_num = #{picNum,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.PreviewRecordDao">
+	
+	
+	<!-- 新增记录信息 -->
+	<insert id="addPreviewRecord" parameterType="com.jm.bean.PreviewRecord">
+	 insert into t_preview_record(previewId,dateTime,lane,vehicleType,speed,axleCnt,axleDis,direction,sumWeight,carNum,station,overLoadRate,overLoadId,overRage,frontPic,backPic,empId,handleTime) 
+	 values
+	 (#{previewId},#{dateTime},#{lane},#{vehicleType},#{speed},#{axleCnt},#{axleDis},#{direction},#{sumWeight},#{carNum},#{station},#{overLoadRate},#{overLoadId},#{overRage},#{frontPic},#{backPic},#{empId},now())
+	</insert>
+	
+	
+	<select id="getFinallyData" resultType="com.jm.bean.PreviewRecord" parameterType="Map">
+		select t1.*,t2.* from t_preview_record t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName  
+		<where>       
+        t1.deleted = 0
+         <if test="station!=null and station!=''">
+             and t1.station=#{station }
+         </if>
+         <if test="overLoadRate  != null and overLoadRate !=''">
+	      	<![CDATA[  and overLoadRate > 0 ]]> 
+	 	 </if>
+	 	<if test="startTime != null and startTime != ''"> 
+	 	    <![CDATA[AND t1.dateTime >= #{startTime} ]]>
+	 	 </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[ AND t1.dateTime <= #{endTime} ]]>
+         </if>
+        </where>				
+	    order by previewId desc
+	</select>
+</mapper>

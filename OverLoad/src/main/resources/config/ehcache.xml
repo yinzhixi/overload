@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+<!-- 
+	Ehcache支持数据持久化，指定持久化数据的存放位置
+ --><!-- java.io. -->
+<!-- <diskStore path="D:\cache"/>   -->
+<!-- 
+	1. maxElementsInMemory：最大缓存对象数量，超出该数量会将对象序列化至硬盘中会把溢出的对象写到硬盘缓存中。
+						         注意：如果缓存的对象要写入到硬盘中的话，则该对象必须实现了Serializable接口才行。
+	2. eternal：对象是否永久有效，默认false，设置为true后会忽略    timeToIdleSeconds/timeToLiveSeconds
+	3. timeToIdleSeconds：当数据闲置n秒后【n秒内不被命中】，就会被删除
+	4. timeToLiveSeconds：数据最多存活n秒后，就会被从缓存中清除
+	5. maxElementsOnDisk：硬盘上最大对象存储数量。 0表示无穷大
+	6. diskExpiryThreadIntervalSeconds：硬盘缓存清理线程的执行问题，默认：120秒
+	7. diskPersistent：在vm重启时是否持久化硬盘缓存，默认false
+	8. memoryStoreEvictionPolicy：缓存策略
+		a).LRU：最近最少使用原则
+			思路：如果一个数据最近用的很少，也就是意味着将来用的很少用到。
+		b).LFU：最少使用原则
+			思路：如果整个期间，用的最少的元素，未来很有可能不怎么用的到。
+		c).FIFO：先进先出原则
+			思路：最早缓存的数据，在未来用的也可能更少，所以先缓存的数据，最先消失。
+			
+ -->
+ 
+<!--  maxEntriesLocalHeap="2000"  
+       eternal="false"  
+       timeToIdleSeconds="600"  
+       timeToLiveSeconds="0"  
+       overflowToDisk="false"  
+       statistics="true">   -->
+       
+       
+   <!--  <defaultCache
+            maxElementsInMemory="10000"
+            maxEntriesLocalHeap="2000"
+            eternal="false" 
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="0"
+            maxElementsOnDisk="10000000"
+            overflowToDisk="false"  
+       		statistics="true">  
+           memoryStoreEvictionPolicy="LRU"> 
+    </defaultCache> -->
+     <diskStore path="java.io.tmpdir"/>
+    <defaultCache    
+          maxElementsInMemory="10000"    
+         maxElementsOnDisk="0"    
+          eternal="false"    
+         overflowToDisk="false"    
+          diskPersistent="false"    
+         timeToIdleSeconds="60"    
+         timeToLiveSeconds="0"    
+         diskSpoolBufferSizeMB="50"    
+         diskExpiryThreadIntervalSeconds="120"    
+        memoryStoreEvictionPolicy="LFU"    
+    />      
+      
+
+    <!-- 登录记录缓存 锁定2分钟 -->  
+<cache name="lgoinRetryCache"  
+       maxEntriesLocalHeap="2000"  
+       eternal="false"  
+       timeToIdleSeconds="60"  
+       timeToLiveSeconds="0"  
+       overflowToDisk="false"  
+       statistics="true">  
+</cache>  
+
+    <cache name="authorizationCache" eternal="false" maxEntriesLocalHeap="2000"  
+        timeToIdleSeconds="0" timeToLiveSeconds="60" overflowToDisk="false"  
+        statistics="true">  
+    </cache>  
+
+    <cache name="authenticationCache" eternal="false" maxEntriesLocalHeap="2000"  
+        timeToIdleSeconds="0" timeToLiveSeconds="60" overflowToDisk="false"  
+        statistics="true">  
+    </cache>  
+
+  
+ 
+</ehcache>  

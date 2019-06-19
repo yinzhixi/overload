@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.StationDao">
+    <!-- 获取全部站点 -->
+	<select id="getAll" resultType="com.jm.bean.Station">
+		select * from t_station
+	</select>
+
+	<!-- 获取全部站点 -->
+	<select id="getAllBy" resultType="com.jm.bean.Station">
+		select * from t_station
+		<where>
+			<if test="stationName != '' and stationName != null">
+				stationName=#{stationName}
+			</if>
+			<if test="stationCode != '' and stationCode != null">
+				stationCode=#{stationCode}
+			</if>
+		</where>
+	</select>
+
+	<!-- 获取同名站点数量 -->
+	<select id="getStationConut" resultType="java.lang.Integer">
+		select count(0) from t_station
+		<where>
+			<if test="stationCode != '' and stationCode != null">
+				stationCode=#{stationCode}
+			</if>
+		</where>
+	</select>
+
+	<insert id="addStation" parameterType="com.jm.bean.Station" >
+		insert into t_station
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="stationName != null" >
+				stationName,
+			</if>
+			<if test="province != null" >
+				province,
+			</if>
+			<if test="city != null" >
+				city,
+			</if>
+			<if test="stationCode != null" >
+				stationCode
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="stationName != null" >
+				#{stationName,jdbcType=VARCHAR},
+			</if>
+			<if test="province != null" >
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null" >
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="stationCode != null" >
+				#{stationCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="delStation">
+		DELETE FROM t_station where id=#{id}
+	</delete>
+
+	<!--站点修改-->
+	<update id="editStation">
+		UPDATE t_station SET
+			<if test="stationName != '' and stationName != null">
+				stationName=#{stationName},
+			</if>
+			<if test="province != '' and province != null">
+				province=#{province},
+			</if>
+			<if test="city != '' and city != null">
+				city=#{city},
+			</if>
+			<if test="stationCode != '' and stationCode != null">
+				stationCode=#{stationCode}
+			</if>
+		where
+		    id=#{id}
+	</update>
+
+
+    <select id="getByStationName" resultType="com.jm.bean.Station">
+        select t1.* FROM t_station t1
+        where  t1.stationName = #{stationName}
+    </select>
+	<select id="getById" resultType="com.jm.bean.Station">
+        select t1.* FROM t_station t1
+        where  t1.id = #{id}
+    </select>
+
+</mapper>

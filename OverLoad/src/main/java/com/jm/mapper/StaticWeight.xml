@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.dao.StaticWeightDao" >
+  <resultMap id="BaseResultMap" type="com.jm.bean.StaticWeight" >
+    <id column="staticId" property="staticid" jdbcType="VARCHAR" />
+    <result column="carNum" property="carnum" jdbcType="VARCHAR" />
+    <result column="cargoName" property="cargoname" jdbcType="VARCHAR" />
+    <result column="lane" property="cargoname" jdbcType="INTEGER" />
+    <result column="vehicleType" property="cargoname" jdbcType="VARCHAR" />
+    <result column="weight" property="cargoname" jdbcType="DOUBLE" />
+    <result column="createTime" property="cargoname" jdbcType="VARCHAR" />
+    <result column="specificationType" property="specificationtype" jdbcType="VARCHAR" />
+    <result column="forwardUnit" property="forwardunit" jdbcType="VARCHAR" />
+    <result column="trafficUnit" property="trafficunit" jdbcType="VARCHAR" />
+    <result column="driver" property="driver" jdbcType="VARCHAR" />
+    <result column="relCode" property="relcode" jdbcType="VARCHAR" />
+    <result column="stationMark" property="stationmark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jm.bean.StaticWeight" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    staticId, carNum,lane,vehicleType,weight,createTime,updateTime, cargoName, specificationType, forwardUnit, trafficUnit, driver,
+    relCode, stationMark
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_static_weight
+    where staticId = #{staticid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="listStaticWeights" resultMap="ResultMapWithBLOBs" parameterType="com.jm.bean.StaticWeight" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_static_weight
+    <where>
+        <if test="staticid != null" >
+          staticId = #{staticid,jdbcType=VARCHAR},
+        </if>
+        <if test="carnum != null" >
+          carNum = #{carnum,jdbcType=VARCHAR},
+        </if>
+        <if test="cargoname != null" >
+          cargoName = #{cargoname,jdbcType=VARCHAR},
+        </if>
+        <if test="specificationtype != null" >
+          specificationType = #{specificationtype,jdbcType=VARCHAR},
+        </if>
+        <if test="forwardunit != null" >
+          forwardUnit = #{forwardunit,jdbcType=VARCHAR},
+        </if>
+        <if test="trafficunit != null" >
+          trafficUnit = #{trafficunit,jdbcType=VARCHAR},
+        </if>
+        <if test="driver != null" >
+          driver = #{driver,jdbcType=VARCHAR},
+        </if>
+        <if test="relcode != null" >
+          relCode = #{relcode,jdbcType=VARCHAR},
+        </if>
+        <if test="stationmark != null" >
+          stationMark = #{stationmark,jdbcType=VARCHAR},
+        </if>
+        <if test="remark != null" >
+          remark = #{remark,jdbcType=LONGVARCHAR},
+        </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_static_weight
+    where staticId = #{staticid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jm.bean.StaticWeight" >
+    insert into t_static_weight (staticId, carNum,lane,vehicleType,weight,
+    createTime,cargoName, specificationType, forwardUnit, trafficUnit, driver,
+    relCode, stationMark,
+      remark)
+    values (#{staticid,jdbcType=VARCHAR}, #{carnum,jdbcType=VARCHAR},#{lane,jdbcType=INTEGER},#{vehicleType,jdbcType=VARCHAR},
+     #{weight,jdbcType=DOUBLE},now(),#{cargoname,jdbcType=VARCHAR},
+      #{specificationtype,jdbcType=VARCHAR}, #{forwardunit,jdbcType=VARCHAR}, #{trafficunit,jdbcType=VARCHAR}, 
+      #{driver,jdbcType=VARCHAR}, #{relcode,jdbcType=VARCHAR}, #{stationmark,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertStaticWeight" parameterType="com.jm.bean.StaticWeight" >
+    insert into t_static_weight
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staticid != null" >
+        staticId,
+      </if>
+      <if test="carnum != null" >
+        carNum,
+      </if>
+      <if test="lane != null" >
+        lane,
+      </if>
+      <if test="vehicleType != null" >
+        vehicleType,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="cargoname != null" >
+        cargoName,
+      </if>
+      <if test="specificationtype != null" >
+        specificationType,
+      </if>
+      <if test="forwardunit != null" >
+        forwardUnit,
+      </if>
+      <if test="trafficunit != null" >
+        trafficUnit,
+      </if>
+      <if test="driver != null" >
+        driver,
+      </if>
+      <if test="relcode != null" >
+        relCode,
+      </if>
+      <if test="stationmark != null" >
+        stationMark,
+      </if>
+      <if test="remark != null" >
+        remark
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staticid != null" >
+        #{staticid,jdbcType=VARCHAR},
+      </if>
+      <if test="carnum != null" >
+        #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="lane != null" >
+        #{lane,jdbcType=INTEGER},
+      </if>
+      <if test="vehicleType != null" >
+        #{vehicleType,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+      <if test="cargoname != null" >
+        #{cargoname,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationtype != null" >
+        #{specificationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardunit != null" >
+        #{forwardunit,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficunit != null" >
+        #{trafficunit,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null" >
+        #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="relcode != null" >
+        #{relcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationmark != null" >
+        #{stationmark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jm.bean.StaticWeight" >
+    update t_static_weight
+    <set >
+      <if test="carnum != null" >
+        carNum = #{carnum,jdbcType=VARCHAR},
+      </if>
+      <if test="cargoname != null" >
+        cargoName = #{cargoname,jdbcType=VARCHAR},
+      </if>
+      <if test="specificationtype != null" >
+        specificationType = #{specificationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="forwardunit != null" >
+        forwardUnit = #{forwardunit,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficunit != null" >
+        trafficUnit = #{trafficunit,jdbcType=VARCHAR},
+      </if>
+      <if test="driver != null" >
+        driver = #{driver,jdbcType=VARCHAR},
+      </if>
+      <if test="relcode != null" >
+        relCode = #{relcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stationmark != null" >
+        stationMark = #{stationmark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where staticId = #{staticid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jm.bean.StaticWeight" >
+    update t_static_weight
+    set carNum = #{carnum,jdbcType=VARCHAR},
+      cargoName = #{cargoname,jdbcType=VARCHAR},
+      specificationType = #{specificationtype,jdbcType=VARCHAR},
+      forwardUnit = #{forwardunit,jdbcType=VARCHAR},
+      trafficUnit = #{trafficunit,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      relCode = #{relcode,jdbcType=VARCHAR},
+      stationMark = #{stationmark,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where staticId = #{staticid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jm.bean.StaticWeight" >
+    update t_static_weight
+    set carNum = #{carnum,jdbcType=VARCHAR},
+      cargoName = #{cargoname,jdbcType=VARCHAR},
+      specificationType = #{specificationtype,jdbcType=VARCHAR},
+      forwardUnit = #{forwardunit,jdbcType=VARCHAR},
+      trafficUnit = #{trafficunit,jdbcType=VARCHAR},
+      driver = #{driver,jdbcType=VARCHAR},
+      relCode = #{relcode,jdbcType=VARCHAR},
+      stationMark = #{stationmark,jdbcType=VARCHAR}
+    where staticId = #{staticid,jdbcType=VARCHAR}
+  </update>
+</mapper>

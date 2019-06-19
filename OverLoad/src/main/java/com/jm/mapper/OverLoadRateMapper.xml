@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.OverLoadRateDao">
+<!-- 获取全部站点 -->
+	<resultMap type="com.jm.bean.OverLoadRate" id="a2">
+		 <result column="overLoadId" property="overLoadId"/>
+        <result column="overLoadRateRegion" property="overLoadRateRegion"/><!-- 超限率区间-->
+        <result column="overNum" property="overNum"/><!-- 数量 -->
+        <result column="percent" property="percent"/><!-- 百分比 -->
+    </resultMap>
+
+    <select id="getAllByOverRate" resultMap="a2">
+      
+    	SELECT t2.overLoadId,t2.overLoadRateRegion, count(t1.previewId) overNum
+        FROM t_overloadrate t2
+        LEFT JOIN t_preview t1 on t1.overLoadId =t2.overLoadId
+        <where>
+        t1.deleted = 0
+             <![CDATA[  and t1.dateTime >= #{startDate }    ]]>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and t1.dateTime >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and t1.dateTime <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+             and t1.station=#{station }
+         </if>
+         <if test="direction != null">
+             and t1.direction=#{direction }
+         </if>
+        <if test="station==null or station==''">
+            and t1.stationId IN
+            <foreach collection="userStationIds" item="stationId" index="index"
+                     open="(" close=")" separator=",">
+                #{stationId}
+            </foreach>
+        </if>
+         </where>
+         GROUP BY t2.overLoadId,t2.overLoadRateRegion
+    </select>
+    
+    <!-- 导出信息 -->
+	<select id="getByIds" resultType="com.jm.bean.OverLoadRate">
+		select t1.*,t2.*,count(1) overNum from t_preview t1 
+        LEFT JOIN t_overloadrate t2 ON t1.overLoadId=t2.overLoadId 
+        where t1.deleted = 0 and t2.overLoadId in
+		<foreach collection="array" item="overLoadId" open="(" close=")" separator=",">#{overLoadId}</foreach>
+	</select>
+	
+</mapper>

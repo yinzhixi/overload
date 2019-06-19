@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.ResourceDao">
+
+		<!-- 查询左侧下拉 -->
+	<resultMap type="com.jm.bean.Resource" id="a1">
+		<result column="menuId" property="menuId"/>
+		<result column="parentId" property="parentId"/>
+		<result column="menuLevel" property="menuLevel"/>
+		<result column="sort" property="sort"/>
+		<result column="name" property="title"/>
+		<result column="icon" property="icon"/>
+		<result column="updateTime" property="updateTime"/>
+		<result column="addTime" property="addTime"/>
+	    <collection ofType="com.jm.bean.Resource" property="children" >
+		<result column="menuId1" property="menuId"/>
+		<result column="parentId1" property="parentId"/>
+		<result column="menuLevel1" property="menuLevel"/>
+		<result column="sort1" property="sort"/>
+		<result column="name1" property="title"/>
+		<result column="path1" property="href"/>
+		<result column="icon1" property="icon"/>
+		<result column="updateTime1" property="updateTime"/>
+		<result column="addTime1" property="addTime"/>
+		</collection>
+	</resultMap>
+
+<!-- 查询全部 -->
+	<select id="getAll" resultMap="a1">
+		select c1.*,c2.menuId menuId1,c2.parentId parentId1,c2.menuLevel menuLevel1,
+		c2.name name1,c2.path path1,c2.updateTime updateTime1,c2.icon icon1,c2.sort sort1,c2.addTime addTime1
+		from t_menu c1 left
+		join t_menu c2 on
+		c1.menuId=c2.parentId 
+		where c1.parentId is null
+	</select>
+	
+	<select id="getAllRoles" resultMap="a1">
+		select c1.*,c2.menuId menuId1,c2.parentId parentId1,c2.menuLevel menuLevel1,
+		c2.name name1,c2.path path1,c2.updateTime updateTime1,c2.icon icon1,c2.sort sort1,c2.addTime addTime1
+		from t_menu c1 left
+		join t_menu c2 on
+		c1.menuId=c2.parentId 
+		left join t_role_menu c3 on c3.menuId=c1.menuId where c2.menuId in (
+		select menuId from t_role_menu where roleId in	<foreach collection="roles" open="(" separator="," close=")" item="roleId">#{roleId}</foreach>	
+		)	
+	order by c1.sort,c2.sort
+	</select>
+
+</mapper>

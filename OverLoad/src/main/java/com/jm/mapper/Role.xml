@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.RoleDao">
+
+
+  <select id="queryAll" resultType="Resource">      	
+			SELECT
+				DISTINCT t1.menuId,t1.parentId,t1.name title
+			FROM
+				t_menu t1
+					
+			ORDER BY t1.parentId ASC, t1.menuId ASC 
+     </select>
+     
+     	 
+	<!-- 角色获取的菜单权限 -->
+     <select id="queryAllMenuByRolrId" resultType="Resource">      	
+			SELECT
+				DISTINCT t1.menuId,t1.parentId,t1.name title,t2.*
+			FROM
+				t_menu t1
+			LEFT JOIN t_role_menu t2 ON t1.menuId = t2.menuId
+			WHERE
+				t2.roleId IN (#{roleId})		
+			ORDER BY t1.parentId ASC, t1.menuId ASC   
+     </select>
+     
+     
+	
+	<!-- 修改角色信息 -->
+	  <update id="updateRole">
+      		update t_role SET name=#{name} where id=#{id}
+     </update>
+	
+	
+	 <!-- 角色获取的菜单权限 -->
+     <select id="getAllMenu" resultType="Resource">
+      	select a.menuId,a.name title,case when b.roleId is not null then true else false end isAssign
+       from t_menu a 
+       left join t_role_menu b on a.menuId = b.menuId and b.roleId = #{id}      
+     </select>
+	
+	 <update id="assignAllResource">
+        insert into t_role_menu(roleId,menuId)
+        select #{roleId},menuId from t_menu 
+     </update>
+     
+     <update id="cancleAllResource">
+        delete from t_role_menu where roleId = #{roleId}
+     </update>
+     
+  
+
+		<!-- 通过用户名获取个人角色信息 -->
+	<!-- <select id="getByEmpName" resultType="Role">
+		select s2.role_id,s1.empName from t_emp s1 left join t_user_role s2 
+		on s1.empName= s2.emp_name where s1.empName=#{empName}
+	</select> -->
+	
+	<select id="getByEmpName" resultType="Role">
+		select  t1.*,t2.* from t_user_role t1 LEFT JOIN t_role t2 ON t1.role_id = t2.id WHERE t1.emp_name=#{empName}
+	</select>
+	
+	
+     <!-- 查询信息 -->
+     <select id="getAll" resultType="Role">
+       select id,name from t_role order by id asc
+     </select>
+     
+    <!-- 查询信息 -->
+     <select id="findAllPermissions" resultType="Permission">
+       select a.id,a.name,case when b.role_id is not null then true else false end isAssign
+       from t_permission a 
+       left join t_role_permission b on a.id = b.permission_id and b.role_id = #{id}
+     </select>
+     
+     <!-- 查询信息 -->
+     <select id="get" resultType="Role">
+        select id,name from t_role where id=#{id}
+     </select>
+     
+    <!-- 新增信息 -->
+    <insert id="add" parameterType="Role">
+     insert into t_role(id,name,domain) values(#{id},#{name},#{domain})
+    </insert>
+    
+    <select id="selectByRoleName" resultType="Role">
+    	select * FROM t_role WHERE `name`=#{name}
+    </select>
+    
+    <!-- 删除 -->
+     <delete id="del">
+         delete from t_role where id=#{id}
+     </delete>
+     
+     <update id="assignAllPermission">
+        insert into t_role_permission(role_id,permission_id) 
+        select #{roleId},id from t_permission 
+     </update>
+     
+     <update id="cancleAllPermission">
+        delete from t_role_permission where role_id = #{roleId}
+     </update>
+     
+</mapper>

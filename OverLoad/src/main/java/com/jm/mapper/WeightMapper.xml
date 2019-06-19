@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jm.dao.WeightDao" >
+  <resultMap id="BaseResultMap" type="com.jm.bean.Weight" >
+    <id column="flow_no" property="flowNo" jdbcType="VARCHAR" />
+    <result column="device_id" property="deviceId" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+    <result column="match_no" property="matchNo" jdbcType="VARCHAR" />
+    <result column="lane" property="lane" jdbcType="TINYINT" />
+    <result column="sum_weight" property="sumWeight" jdbcType="DOUBLE" />
+    <result column="axle_cnt" property="axleCnt" jdbcType="INTEGER" />
+    <result column="axle_grp_cnt" property="axleGrpCnt" jdbcType="INTEGER" />
+    <result column="axle_weight" property="axleWeight" jdbcType="VARCHAR" />
+    <result column="l_axle_weight" property="lAxleWeight" jdbcType="VARCHAR" />
+    <result column="r_axle_weight" property="rAxleWeight" jdbcType="VARCHAR" />
+    <result column="axle_type" property="axleType" jdbcType="VARCHAR" />
+    <result column="axle_dis" property="axleDis" jdbcType="VARCHAR" />
+    <result column="axle_grp_type" property="axleGrpType" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="SMALLINT" />
+    <result column="speed" property="speed" jdbcType="TINYINT" />
+    <result column="run_state" property="runState" jdbcType="TINYINT" />
+    <result column="reverse" property="reverse" jdbcType="TINYINT" />
+    <result column="attachment_no" property="attachmentNo" jdbcType="VARCHAR" />
+    <result column="date_time" property="dateTime" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    flow_no, device_id, station_id, match_no, lane, sum_weight, axle_cnt, axle_grp_cnt, 
+    axle_weight, l_axle_weight, r_axle_weight, axle_type, axle_dis, axle_grp_type, length, 
+    speed, run_state, reverse, attachment_no, date_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from odt_vehicle_weight
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from odt_vehicle_weight
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jm.bean.Weight" >
+    insert into odt_vehicle_weight (flow_no, device_id, station_id, 
+      match_no, lane, sum_weight, 
+      axle_cnt, axle_grp_cnt, axle_weight, 
+      l_axle_weight, r_axle_weight, axle_type, 
+      axle_dis, axle_grp_type, length, 
+      speed, run_state, reverse, 
+      attachment_no, date_time, create_time
+      )
+    values (#{flowNo,jdbcType=VARCHAR}, #{deviceId,jdbcType=VARCHAR}, #{stationId,jdbcType=VARCHAR}, 
+      #{matchNo,jdbcType=VARCHAR}, #{lane,jdbcType=TINYINT}, #{sumWeight,jdbcType=DOUBLE}, 
+      #{axleCnt,jdbcType=INTEGER}, #{axleGrpCnt,jdbcType=INTEGER}, #{axleWeight,jdbcType=VARCHAR}, 
+      #{lAxleWeight,jdbcType=VARCHAR}, #{rAxleWeight,jdbcType=VARCHAR}, #{axleType,jdbcType=VARCHAR}, 
+      #{axleDis,jdbcType=VARCHAR}, #{axleGrpType,jdbcType=VARCHAR}, #{length,jdbcType=SMALLINT}, 
+      #{speed,jdbcType=TINYINT}, #{runState,jdbcType=TINYINT}, #{reverse,jdbcType=TINYINT}, 
+      #{attachmentNo,jdbcType=VARCHAR}, #{dateTime,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jm.bean.Weight" >
+    insert into odt_vehicle_weight
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="flowNo != null" >
+        flow_no,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="matchNo != null" >
+        match_no,
+      </if>
+      <if test="lane != null" >
+        lane,
+      </if>
+      <if test="sumWeight != null" >
+        sum_weight,
+      </if>
+      <if test="axleCnt != null" >
+        axle_cnt,
+      </if>
+      <if test="axleGrpCnt != null" >
+        axle_grp_cnt,
+      </if>
+      <if test="axleWeight != null" >
+        axle_weight,
+      </if>
+      <if test="lAxleWeight != null" >
+        l_axle_weight,
+      </if>
+      <if test="rAxleWeight != null" >
+        r_axle_weight,
+      </if>
+      <if test="axleType != null" >
+        axle_type,
+      </if>
+      <if test="axleDis != null" >
+        axle_dis,
+      </if>
+      <if test="axleGrpType != null" >
+        axle_grp_type,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="speed != null" >
+        speed,
+      </if>
+      <if test="runState != null" >
+        run_state,
+      </if>
+      <if test="reverse != null" >
+        reverse,
+      </if>
+      <if test="attachmentNo != null" >
+        attachment_no,
+      </if>
+      <if test="dateTime != null" >
+        date_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="flowNo != null" >
+        #{flowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="matchNo != null" >
+        #{matchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lane != null" >
+        #{lane,jdbcType=TINYINT},
+      </if>
+      <if test="sumWeight != null" >
+        #{sumWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="axleCnt != null" >
+        #{axleCnt,jdbcType=INTEGER},
+      </if>
+      <if test="axleGrpCnt != null" >
+        #{axleGrpCnt,jdbcType=INTEGER},
+      </if>
+      <if test="axleWeight != null" >
+        #{axleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="lAxleWeight != null" >
+        #{lAxleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="rAxleWeight != null" >
+        #{rAxleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="axleType != null" >
+        #{axleType,jdbcType=VARCHAR},
+      </if>
+      <if test="axleDis != null" >
+        #{axleDis,jdbcType=VARCHAR},
+      </if>
+      <if test="axleGrpType != null" >
+        #{axleGrpType,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=SMALLINT},
+      </if>
+      <if test="speed != null" >
+        #{speed,jdbcType=TINYINT},
+      </if>
+      <if test="runState != null" >
+        #{runState,jdbcType=TINYINT},
+      </if>
+      <if test="reverse != null" >
+        #{reverse,jdbcType=TINYINT},
+      </if>
+      <if test="attachmentNo != null" >
+        #{attachmentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jm.bean.Weight" >
+    update odt_vehicle_weight
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=VARCHAR},
+      </if>
+      <if test="matchNo != null" >
+        match_no = #{matchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lane != null" >
+        lane = #{lane,jdbcType=TINYINT},
+      </if>
+      <if test="sumWeight != null" >
+        sum_weight = #{sumWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="axleCnt != null" >
+        axle_cnt = #{axleCnt,jdbcType=INTEGER},
+      </if>
+      <if test="axleGrpCnt != null" >
+        axle_grp_cnt = #{axleGrpCnt,jdbcType=INTEGER},
+      </if>
+      <if test="axleWeight != null" >
+        axle_weight = #{axleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="lAxleWeight != null" >
+        l_axle_weight = #{lAxleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="rAxleWeight != null" >
+        r_axle_weight = #{rAxleWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="axleType != null" >
+        axle_type = #{axleType,jdbcType=VARCHAR},
+      </if>
+      <if test="axleDis != null" >
+        axle_dis = #{axleDis,jdbcType=VARCHAR},
+      </if>
+      <if test="axleGrpType != null" >
+        axle_grp_type = #{axleGrpType,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=SMALLINT},
+      </if>
+      <if test="speed != null" >
+        speed = #{speed,jdbcType=TINYINT},
+      </if>
+      <if test="runState != null" >
+        run_state = #{runState,jdbcType=TINYINT},
+      </if>
+      <if test="reverse != null" >
+        reverse = #{reverse,jdbcType=TINYINT},
+      </if>
+      <if test="attachmentNo != null" >
+        attachment_no = #{attachmentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        date_time = #{dateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jm.bean.Weight" >
+    update odt_vehicle_weight
+    set device_id = #{deviceId,jdbcType=VARCHAR},
+      station_id = #{stationId,jdbcType=VARCHAR},
+      match_no = #{matchNo,jdbcType=VARCHAR},
+      lane = #{lane,jdbcType=TINYINT},
+      sum_weight = #{sumWeight,jdbcType=DOUBLE},
+      axle_cnt = #{axleCnt,jdbcType=INTEGER},
+      axle_grp_cnt = #{axleGrpCnt,jdbcType=INTEGER},
+      axle_weight = #{axleWeight,jdbcType=VARCHAR},
+      l_axle_weight = #{lAxleWeight,jdbcType=VARCHAR},
+      r_axle_weight = #{rAxleWeight,jdbcType=VARCHAR},
+      axle_type = #{axleType,jdbcType=VARCHAR},
+      axle_dis = #{axleDis,jdbcType=VARCHAR},
+      axle_grp_type = #{axleGrpType,jdbcType=VARCHAR},
+      length = #{length,jdbcType=SMALLINT},
+      speed = #{speed,jdbcType=TINYINT},
+      run_state = #{runState,jdbcType=TINYINT},
+      reverse = #{reverse,jdbcType=TINYINT},
+      attachment_no = #{attachmentNo,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where flow_no = #{flowNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

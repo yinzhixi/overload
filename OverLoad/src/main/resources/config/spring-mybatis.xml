@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx     
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+       
+        <!--  引入db.properties  -->
+        <context:property-placeholder location="classpath:config/db.properties"/>
+        <!--  配置druid的数据源  -->
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+          <property name="driverClassName" value="${mysql.driverClassName}"/>
+          <property name="url" value="${mysql.url}"/>
+          <property name="username" value="${mysql.username}"/>
+          <property name="password" value="${mysql.password}"/>
+            <!-- 初始化连接大小 --> 
+          <property name="initialSize" value="5"/>
+          <!--    连接池最大使用连接数量  -->
+          <property name="maxActive" value="20"/>
+          <!--  连接池最大空闲  -->
+          <!-- <property name="maxIdle" value="20"/> -->
+          <!--   连接池最小空闲  -->
+          <property name="minIdle" value="2"/>
+          <!--     获取连接最大等待时间  -->
+          <property name="maxWait" value="60000"/>
+          <property name="poolPreparedStatements" value="true"/>
+          <property name="maxPoolPreparedStatementPerConnectionSize" value="33"/>
+          <property name="testOnBorrow" value="false"/>
+          <property name="testOnReturn" value="false"/>
+          <property name="testWhileIdle" value="true"/>
+          <!--   配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒  -->
+          <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+          <!--  配置一个连接在池中最小生存的时间，单位是毫秒  -->
+          <property name="minEvictableIdleTimeMillis" value="25200000"/>
+          <!--   打开removeAbandoned功能  -->
+          <property name="removeAbandoned" value="true"/>
+          <!--  1800秒，也就是30分钟  -->
+          <property name="removeAbandonedTimeout" value="1800"/>
+          <!--  关闭abanded连接时输出错误日志  -->
+          <property name="logAbandoned" value="true"/>
+          <!--  监控数据库  -->
+          <property name="filters" value="stat"/>
+          <!--   <property name="filters" value="mergeStat" />  -->
+        </bean>
+        
+        <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+          <!--  mybatis配置文件路径  -->
+          <property name="configLocation" value="classpath:config/mybatis.xml"/>
+          <!-- 数据源 -->
+          <property name="dataSource" ref="dataSource" />
+          <!-- 自动扫描mapping.xml文件，**表示迭代查找 -->
+          <property name="mapperLocations" value="classpath:com/jm/mapper/*.xml" />
+          <!--  mybatis分页插件  -->
+          <property name="plugins">
+            <array>
+              <bean class="com.github.pagehelper.PageInterceptor">
+                <property name="properties">
+                <!-- 使用下面的方式配置参数，一行配置一个  -->
+                <value>
+                offsetAsPageNum=true rowBoundsWithCount=true pageSizeZero=true reasonable=true
+                </value>
+                </property>
+              </bean>
+            </array>
+         </property>
+        </bean>
+        <!-- DAO接口所在包名，Spring会自动查找其下的类 ,包下的类需要使用@MapperScan注解,否则容器注入会失败，使用 @MapperScan注解方式表示不用配置文件里面配置路劲了-->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+          <property name="basePackage" value="com.jm.dao" />
+          <!--指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 -->
+          <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        </bean>
+        <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+          <property name="dataSource" ref="dataSource" />
+        </bean>
+        
+    <!--   <aop:config>
+		<aop:pointcut expression="execution(public * com.jm.controller.*.*(..))"
+			id="pointcut" />
+				<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>		
+	</aop:config> 
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		配置事物规则
+		<tx:attributes >
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice> -->
+        <!-- 支持注解驱动的事务管理，指定事务管理器  -->
+        <tx:annotation-driven transaction-manager="transactionManager"/>
+        	<!-- ***shiro配置*** -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"/><!-- 注入shiro安全管理器 -->
+		<property name="filterChainDefinitions"><!-- filter的过滤链 -->
+			<value><!-- 排除的静态资源 -->
+		 	/WEB-INF/pages/login.jsp=anon
+		 	    /api/**=anon
+				/emp/login=anon
+				/emp/**=anon
+				/css/**=anon
+				/js/**=anon
+				/login/**=anon
+				/images/**=anon
+				/json/**=anon
+                /static/**=anon
+				/layui/**=anon
+                /ov.apk =anon
+				/**=authc
+			</value>
+		</property>
+	</bean>
+	
+	<!-- ***shiro的安全管理器*** -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="realm"/>	<!-- 将realm注入至安全管理器中 -->	
+		<!--  <property name="cacheManager" ref="cacheManager"></property>	 -->
+			
+	</bean>	     
+			
+<!-- ***自定义的realm*** -->
+	<bean id="realm" class="com.jm.web.realm.Realm">
+		<property name="credentialsMatcher" ref="credentialsMatcher"/>
+	
+		<!-- <property name="authorizationCachingEnabled" value="true" /> -->	<!-- 配置权限信息缓存 -->
+		<!-- <property name="authorizationCacheName" value="authorizationCache"/> -->	<!-- 缓存配置的名字 -->
+	</bean>
+	
+	
+<!-- ***凭证匹配器*** -->
+	<bean id="credentialsMatcher"  class="com.jm.web.realm.RetryLimitCredentialsMatcher">
+			 <constructor-arg index="0" ref="cacheManager"/>   
+    		 <constructor-arg index="1" value="5"/>    		
+		 <property name="hashIterations" value="5"/><!-- 加密次数 -->
+		<property name="hashAlgorithmName" value="MD5"/> 	<!-- 加密策略 -->
+
+	</bean>
+	
+	
+	<!-- 开启ehcache缓冲 -->
+	 <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:config/ehcache.xml"/>	<!-- 缓存配置文件   -->
+	</bean> 
+
+</beans>

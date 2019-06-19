@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.ReviewedPreviewDao">
+
+	<delete id="delReviewed">
+		DELETE FROM t_previewafter_preview WHERE previewId = #{previewId}
+	</delete>
+	
+    <!-- 新增信息 -->
+    <insert id="addReviewed">
+     		insert into t_previewAfter_preview(
+            previewId,   
+            overLoadId,   
+            lane,  
+            carNum,   axleCnt,   speed,direction,sumWeight,
+            overRage,overLoadRate,dateTime,station,stationId,venifyTime,
+            limitWeight,
+            axleWeight1,
+            axleWeight2,
+            axleWeight3,
+            axleWeight4,
+            axleWeight5,
+            axleWeight6,
+            axleWeight7,
+            axleWeight8,
+            checkNo,
+            frontPic,
+            backPic,
+            platePic,
+            vedioPath,
+            screenPic,
+            snapScreen
+            
+            ) 
+     		values(
+            #{previewId},#{overLoadId},#{lane},#{carNum},#{axleCnt},#{speed},
+            #{direction},#{sumWeight},#{overRage},#{overLoadRate},#{dateTime},
+            #{station},#{stationId},#{venifyTime},#{limitWeight},
+            #{axleWeight1},
+            #{axleWeight2},
+            #{axleWeight3},
+            #{axleWeight4},
+            #{axleWeight5},
+            #{axleWeight6},
+            #{axleWeight7},
+            #{axleWeight8},
+            #{checkNo},
+            #{frontPic},
+            #{backPic},
+            #{platePic},
+            #{vedioPath},
+            #{screenPic},
+            #{snapScreen}
+            )
+    </insert>
+	
+	
+	<update id="updateReviewed">
+			update t_preview SET venifyPreview=1 WHERE previewId=#{previewId}
+	</update>
+	
+	<update id="updateReviewed2">
+			update t_preview SET venifyPreview=0 WHERE previewId=#{previewId}
+	</update>
+	
+	<select id="getByReviewedId" resultType="ReviewedPreview">			
+		select * FROM t_previewafter_preview WHERE previewId=#{previewId}
+	</select>
+
+		 
+<!-- 	预检明细首页展示 -->
+	 <select id="queryAll" resultType="com.jm.bean.ReviewedPreview">
+		select t1.*,t2.* from t_previewafter_preview t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName 
+		<where>
+        <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and t1.dateTime >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and t1.dateTime <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!='' and station!='undefined'">
+             and station =#{station} 
+         </if>
+          <if test="lane !=null and lane !=''">
+             and t1.lane=#{lane }
+         </if>
+         <if test="carNum!=null and carNum!=''">
+             and t1.carNum like '%${carNum }%' 
+         </if>
+         <if test="axleCnt != null and axleCnt_op != null">
+             <if test="axleCnt_op == 0">
+                <![CDATA[ and t1.axleCnt > #{axleCnt } ]]>
+              </if>
+              <if test="axleCnt_op == 1">
+                <![CDATA[ and t1.axleCnt < #{axleCnt } ]]>
+              </if>
+              <if test="axleCnt_op == 2">
+                <![CDATA[ and t1.axleCnt >= #{axleCnt } ]]>
+              </if>
+              <if test="axleCnt_op == 3">
+                <![CDATA[ and t1.axleCnt <= #{axleCnt } ]]>
+              </if>
+              <if test="axleCnt_op == 4">
+                <![CDATA[ and t1.axleCnt = #{axleCnt } ]]>
+              </if>
+         </if>
+         <if test="overRate_op != null and overRate_num != null">
+             <if test="overRate_op == 0">
+                <![CDATA[ and t1.overLoadRate > #{overRate_num } ]]>
+              </if>
+              <if test="overRate_op == 1">
+                <![CDATA[ and t1.overLoadRate < #{overRate_num } ]]>
+              </if>
+              <if test="overRate_op == 2">
+                <![CDATA[ and t1.overLoadRate >= #{overRate_num } ]]>
+              </if>
+              <if test="overRate_op == 3">
+                <![CDATA[ and t1.overLoadRate <= #{overRate_num } ]]>
+              </if>
+              <if test="overRate_op == 4">
+                <![CDATA[ and t1.overLoadRate = #{overRate_num } ]]>
+              </if>
+         </if>
+         
+          <if test="overRate !=null ">
+             and t1.overLoadId = #{overRate }
+         </if> 
+         
+          <if test="recognition !=null ">
+             and t1.recognition = #{recognition }
+         </if>          
+           <if test="startWeight != null">
+             <![CDATA[ and t1.sumWeight >= #{startWeight } ]]>
+         </if>
+          <if test="endWeight != null">
+              <![CDATA[ and t1.sumWeight <= #{endWeight } ]]>
+         </if> 
+         <if test="direction != null">
+              <![CDATA[ and t1.direction = #{direction } ]]>
+         </if>
+        <if test="station==null or station==''">
+            and t1.stationMark IN
+            <foreach collection="userStationMarks" item="stationMark" index="index"
+                     open="(" close=")" separator=",">
+                #{stationMark}
+            </foreach>
+        </if>
+         </where>
+       order by t1.previewId desc
+	 </select>
+ 	
+ 	  <update id="updatePreview2">
+     		  update t_preview 
+              set lane=#{lane},carNum=#{carNum},
+              axleCnt=#{axleCnt},speed=#{speed},
+              limitWeight=#{limitWeight},
+     		  sumWeight=#{sumWeight},overRage=#{overRage},
+              overLoadRate=#{overLoadRate}
+              WHERE previewId=#{previewId}
+     </update>
+     <update id="setUploaded">
+              update t_previewafter_preview 
+              set uploaded=#{res},uploadTime=#{uploadTime}
+              WHERE previewId=#{previewId}
+     </update>
+     
+    <select id="existsCheckNo" resultType="java.lang.Integer">
+        SELECT COUNT(checkNo) FROM t_previewafter_preview 
+        WHERE checkNo = #{checkNo}
+    </select>
+</mapper>

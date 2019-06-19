@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.UserNodeDao">
+
+	<delete id="delUserNode">
+		DELETE from t_user_node WHERE nodeCode = #{nodeCode}
+	</delete>
+        
+     <!-- 查询信息 -->
+     <select id="getByEmpId" resultType="com.jm.bean.UserNode">
+         select empId,nodeCode
+        from t_user_node
+         <where>
+             <if test="empId!=null and empId!=''">
+                 empId=#{empId}
+             </if>
+         </where>
+     </select>
+
+    <select id="userNodeCount" resultType="Integer">
+        select count(1) from t_user_node where empId=#{empId} and nodeCode=#{nodeCode}
+    </select>
+    <!-- 新增信息 -->
+     <insert id="add" >
+     	insert into t_user_node(empId,nodeCode) values(#{empId},#{nodeCode})
+    </insert> 
+    
+    <!-- 删除 -->
+      <delete id="del">
+         delete from t_user_node  where empId =#{empId} AND nodeCode=#{nodeCode}
+     </delete>
+    <update id="assignAllNode">
+        insert into t_user_node(empId,nodeCode)
+        select #{empId},id from node
+     </update>
+
+     <update id="cancleAllNode">
+        delete from t_user_node where empId = #{empId}
+     </update>
+	
+</mapper>

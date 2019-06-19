@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jm.dao.PreviewDao">
+    <resultMap id="BaseResultMap" type="com.jm.bean.Preview" >
+        <id column="preview_id" property="previewId" jdbcType="VARCHAR" />
+        <result column="weight_device_id" property="weightDeviceId" jdbcType="VARCHAR" />
+        <result column="station_id" property="stationId" jdbcType="VARCHAR" />
+        <result column="match_no" property="matchNo" jdbcType="VARCHAR" />
+        <result column="weight_lane" property="weightLane" jdbcType="TINYINT" />
+        <result column="sum_weight" property="sumWeight" jdbcType="DOUBLE" />
+        <result column="axle_cnt" property="axleCnt" jdbcType="INTEGER" />
+        <result column="axle_grp_cnt" property="axleGrpCnt" jdbcType="INTEGER" />
+        <result column="axle_weight" property="axleWeight" jdbcType="VARCHAR" />
+        <result column="l_axle_weight" property="lAxleWeight" jdbcType="VARCHAR" />
+        <result column="r_axle_weight" property="rAxleWeight" jdbcType="VARCHAR" />
+        <result column="axle_type" property="axleType" jdbcType="VARCHAR" />
+        <result column="axle_dis" property="axleDis" jdbcType="VARCHAR" />
+        <result column="axle_grp_type" property="axleGrpType" jdbcType="VARCHAR" />
+        <result column="weight_length" property="weightLength" jdbcType="SMALLINT" />
+        <result column="weight_speed" property="weightSpeed" jdbcType="TINYINT" />
+        <result column="run_state" property="runState" jdbcType="TINYINT" />
+        <result column="reverse" property="reverse" jdbcType="TINYINT" />
+        <result column="weight_attachment_no" property="weightAttachmentNo" jdbcType="VARCHAR" />
+        <result column="weight_date_time" property="weightDateTime" jdbcType="VARCHAR" />
+        <result column="weight_create_time" property="weightCreateTime" jdbcType="TIMESTAMP" />
+        <result column="camera_device_id" property="cameraDeviceId" jdbcType="VARCHAR" />
+        <result column="camera_dir" property="cameraDir" jdbcType="TINYINT" />
+        <result column="plate_num" property="plateNum" jdbcType="VARCHAR" />
+        <result column="entire_believe" property="entireBelieve" jdbcType="TINYINT" />
+        <result column="plate_type" property="plateType" jdbcType="TINYINT" />
+        <result column="plate_color" property="plateColor" jdbcType="SMALLINT" />
+        <result column="color_depth" property="colorDepth" jdbcType="TINYINT" />
+        <result column="color" property="color" jdbcType="TINYINT" />
+        <result column="camera_length" property="cameraLength" jdbcType="INTEGER" />
+        <result column="camera_width" property="cameraWidth" jdbcType="INTEGER" />
+        <result column="camera_height" property="cameraHeight" jdbcType="INTEGER" />
+        <result column="camera_lane" property="cameraLane" jdbcType="TINYINT" />
+        <result column="vehicle_type" property="vehicleType" jdbcType="TINYINT" />
+        <result column="camera_speed" property="cameraSpeed" jdbcType="INTEGER" />
+        <result column="direction" property="direction" jdbcType="TINYINT" />
+        <result column="vehicle_logo_recog" property="vehicleLogoRecog" jdbcType="SMALLINT" />
+        <result column="illegal_type" property="illegalType" jdbcType="TINYINT" />
+        <result column="camera_attachment_no" property="cameraAttachmentNo" jdbcType="VARCHAR" />
+        <result column="camera_date_time" property="cameraDateTime" jdbcType="VARCHAR" />
+        <result column="pic_num" property="picNum" jdbcType="TINYINT" />
+        <result column="camera_create_time" property="cameraCreateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+      <sql id="Base_Column_List" >
+        preview_id, weight_device_id, station_id, match_no, weight_lane, sum_weight, axle_cnt,
+        axle_grp_cnt, axle_weight, l_axle_weight, r_axle_weight, axle_type, axle_dis, axle_grp_type,
+        weight_length, weight_speed, run_state, reverse, weight_attachment_no, weight_date_time,
+        weight_create_time, camera_device_id, camera_dir, plate_num, entire_believe, plate_type,
+        plate_color, color_depth, color, camera_length, camera_width, camera_height, camera_lane,
+        vehicle_type, camera_speed, direction, vehicle_logo_recog, illegal_type, camera_attachment_no,
+        camera_date_time, pic_num, camera_create_time
+      </sql>
+    <insert id="insertSelective" parameterType="com.jm.bean.Preview" >
+        insert into odt_vehicle_preview
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="previewId != null" >
+                preview_id,
+            </if>
+            <if test="weightDeviceId != null" >
+                weight_device_id,
+            </if>
+            <if test="stationId != null" >
+                station_id,
+            </if>
+            <if test="matchNo != null" >
+                match_no,
+            </if>
+            <if test="weightLane != null" >
+                weight_lane,
+            </if>
+            <if test="sumWeight != null" >
+                sum_weight,
+            </if>
+            <if test="axleCnt != null" >
+                axle_cnt,
+            </if>
+            <if test="axleGrpCnt != null" >
+                axle_grp_cnt,
+            </if>
+            <if test="axleWeight != null" >
+                axle_weight,
+            </if>
+            <if test="lAxleWeight != null" >
+                l_axle_weight,
+            </if>
+            <if test="rAxleWeight != null" >
+                r_axle_weight,
+            </if>
+            <if test="axleType != null" >
+                axle_type,
+            </if>
+            <if test="axleDis != null" >
+                axle_dis,
+            </if>
+            <if test="axleGrpType != null" >
+                axle_grp_type,
+            </if>
+            <if test="weightLength != null" >
+                weight_length,
+            </if>
+            <if test="weightSpeed != null" >
+                weight_speed,
+            </if>
+            <if test="runState != null" >
+                run_state,
+            </if>
+            <if test="reverse != null" >
+                reverse,
+            </if>
+            <if test="weightAttachmentNo != null" >
+                weight_attachment_no,
+            </if>
+            <if test="weightDateTime != null" >
+                weight_date_time,
+            </if>
+            <if test="weightCreateTime != null" >
+                weight_create_time,
+            </if>
+            <if test="cameraDeviceId != null" >
+                camera_device_id,
+            </if>
+            <if test="cameraDir != null" >
+                camera_dir,
+            </if>
+            <if test="plateNum != null" >
+                plate_num,
+            </if>
+            <if test="entireBelieve != null" >
+                entire_believe,
+            </if>
+            <if test="plateType != null" >
+                plate_type,
+            </if>
+            <if test="plateColor != null" >
+                plate_color,
+            </if>
+            <if test="colorDepth != null" >
+                color_depth,
+            </if>
+            <if test="color != null" >
+                color,
+            </if>
+            <if test="cameraLength != null" >
+                camera_length,
+            </if>
+            <if test="cameraWidth != null" >
+                camera_width,
+            </if>
+            <if test="cameraHeight != null" >
+                camera_height,
+            </if>
+            <if test="cameraLane != null" >
+                camera_lane,
+            </if>
+            <if test="vehicleType != null" >
+                vehicle_type,
+            </if>
+            <if test="cameraSpeed != null" >
+                camera_speed,
+            </if>
+            <if test="direction != null" >
+                direction,
+            </if>
+            <if test="vehicleLogoRecog != null" >
+                vehicle_logo_recog,
+            </if>
+            <if test="illegalType != null" >
+                illegal_type,
+            </if>
+            <if test="cameraAttachmentNo != null" >
+                camera_attachment_no,
+            </if>
+            <if test="cameraDateTime != null" >
+                camera_date_time,
+            </if>
+            <if test="picNum != null" >
+                pic_num,
+            </if>
+            <if test="cameraCreateTime != null" >
+                camera_create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="previewId != null" >
+                #{previewId,jdbcType=VARCHAR},
+            </if>
+            <if test="weightDeviceId != null" >
+                #{weightDeviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="stationId != null" >
+                #{stationId,jdbcType=VARCHAR},
+            </if>
+            <if test="matchNo != null" >
+                #{matchNo,jdbcType=VARCHAR},
+            </if>
+            <if test="weightLane != null" >
+                #{weightLane,jdbcType=TINYINT},
+            </if>
+            <if test="sumWeight != null" >
+                #{sumWeight,jdbcType=DOUBLE},
+            </if>
+            <if test="axleCnt != null" >
+                #{axleCnt,jdbcType=INTEGER},
+            </if>
+            <if test="axleGrpCnt != null" >
+                #{axleGrpCnt,jdbcType=INTEGER},
+            </if>
+            <if test="axleWeight != null" >
+                #{axleWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="lAxleWeight != null" >
+                #{lAxleWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="rAxleWeight != null" >
+                #{rAxleWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="axleType != null" >
+                #{axleType,jdbcType=VARCHAR},
+            </if>
+            <if test="axleDis != null" >
+                #{axleDis,jdbcType=VARCHAR},
+            </if>
+            <if test="axleGrpType != null" >
+                #{axleGrpType,jdbcType=VARCHAR},
+            </if>
+            <if test="weightLength != null" >
+                #{weightLength,jdbcType=SMALLINT},
+            </if>
+            <if test="weightSpeed != null" >
+                #{weightSpeed,jdbcType=TINYINT},
+            </if>
+            <if test="runState != null" >
+                #{runState,jdbcType=TINYINT},
+            </if>
+            <if test="reverse != null" >
+                #{reverse,jdbcType=TINYINT},
+            </if>
+            <if test="weightAttachmentNo != null" >
+                #{weightAttachmentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="weightDateTime != null" >
+                #{weightDateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="weightCreateTime != null" >
+                #{weightCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cameraDeviceId != null" >
+                #{cameraDeviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="cameraDir != null" >
+                #{cameraDir,jdbcType=TINYINT},
+            </if>
+            <if test="plateNum != null" >
+                #{plateNum,jdbcType=VARCHAR},
+            </if>
+            <if test="entireBelieve != null" >
+                #{entireBelieve,jdbcType=TINYINT},
+            </if>
+            <if test="plateType != null" >
+                #{plateType,jdbcType=TINYINT},
+            </if>
+            <if test="plateColor != null" >
+                #{plateColor,jdbcType=SMALLINT},
+            </if>
+            <if test="colorDepth != null" >
+                #{colorDepth,jdbcType=TINYINT},
+            </if>
+            <if test="color != null" >
+                #{color,jdbcType=TINYINT},
+            </if>
+            <if test="cameraLength != null" >
+                #{cameraLength,jdbcType=INTEGER},
+            </if>
+            <if test="cameraWidth != null" >
+                #{cameraWidth,jdbcType=INTEGER},
+            </if>
+            <if test="cameraHeight != null" >
+                #{cameraHeight,jdbcType=INTEGER},
+            </if>
+            <if test="cameraLane != null" >
+                #{cameraLane,jdbcType=TINYINT},
+            </if>
+            <if test="vehicleType != null" >
+                #{vehicleType,jdbcType=TINYINT},
+            </if>
+            <if test="cameraSpeed != null" >
+                #{cameraSpeed,jdbcType=INTEGER},
+            </if>
+            <if test="direction != null" >
+                #{direction,jdbcType=TINYINT},
+            </if>
+            <if test="vehicleLogoRecog != null" >
+                #{vehicleLogoRecog,jdbcType=SMALLINT},
+            </if>
+            <if test="illegalType != null" >
+                #{illegalType,jdbcType=TINYINT},
+            </if>
+            <if test="cameraAttachmentNo != null" >
+                #{cameraAttachmentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="cameraDateTime != null" >
+                #{cameraDateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="picNum != null" >
+                #{picNum,jdbcType=TINYINT},
+            </if>
+            <if test="cameraCreateTime != null" >
+                #{cameraCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+<!-- 审核之照片显示 -->
+	<select id="getAllImgs" resultType="com.jm.bean.PreviewImg">
+		SELECT * FROM preview_img WHERE carNum = #{carNum} AND snapTime = #{dateTime}
+	</select>
+	
+	<!-- 车牌识别率首页展示 -->
+ 	<select id="getAllByCarNum" resultMap="BaseResultMap">
+
+    </select>
+
+
+	<select id="getFinallyData" resultType="Preview">
+		select t1.*,t2.* from t_preview t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName  
+		<where>       
+        t1.deleted = 0
+         <if test="station!=null and station!=''">
+             and t1.station=#{station }
+         </if>
+         
+         <if test="overLoadRate  != null and overLoadRate !=''">
+	      	<![CDATA[  and overLoadRate > 0 ]]> 
+	 	 </if>
+	 	
+         </where>
+	     order by previewId desc
+	</select>
+	
+	<select id="getPreviewData" resultType="com.jm.bean.Preview" parameterType="Map">
+		select t1.previewId,t1.dateTime,t1.lane,t1.vehicleType,t1.speed,t1.direction,t1.sumWeight,t1.carNum,t1.station,t1.frontPic,t1.backPic,t1.picbak,
+		       t1.sidePic,t1.upPic,t1.overLoadRate,t1.overLoadId,t1.overRage,t1.checkNo,t2.stationName 
+			from 
+		  		t_preview t1 
+		  	LEFT JOIN t_station t2 ON t1.station=t2.stationName
+		<where>  
+         <if test="station!=null and station!=''">
+             and t1.station=#{station }
+         </if>
+         <if test="overLoadRate  != null and overLoadRate !=''">
+	      	<![CDATA[  and overLoadRate > 0 ]]> 
+	 	 </if>
+	 	<if test="startTime != null and startTime != ''"> 
+	 	    <![CDATA[AND t1.dateTime >= #{startTime} ]]>
+	 	 </if>
+        <if test="endTime != null and endTime != ''">0</if>
+        </where>				
+	    order by previewId desc
+	</select>
+
+
+   <!--预检实时数据首页展示 -->
+	 <select id="getAll" resultMap="BaseResultMap">
+         select t1.*,t2.* from t_preview t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName
+		<where> 	     
+        t1.deleted = 0
+	      <if test="station  != null and station !=''">
+	       	AND station =#{station}
+	 	</if>	 		 	     
+	     <if test="time  != null and time !=''">
+	      	<![CDATA[  and dateTime >= now()-interval #{time} minute ]]>
+	 	</if>
+        <if test="station==null or station==''">
+            and t1.stationMark IN
+            <foreach collection="userStationCodes" item="stationMark" index="index"
+                     open="(" close=")" separator=",">
+                #{stationMark}
+            </foreach>
+        </if>
+	 </where>	
+	 	  order by previewId desc		
+	 </select>
+	 
+	 <select id="getCount" resultType="int">
+	 	select count(1) from t_preview where deleted = 0
+	 </select>
+	
+	 
+<!-- 	预检明细首页展示 -->
+	 <select id="showAllByPre" resultMap="BaseResultMap">
+         select c.* from (select t1.*,t2.* from t_preview t1 LEFT JOIN t_station t2 ON t1.station=t2.stationName
+         <where>
+             t1.deleted = 0
+             <if test="startDate!=null and startDate!=''">
+                 <![CDATA[  and t1.dateTime >= #{startDate }    ]]>
+             </if>
+             <if test="endDate!=null and endDate!=''">
+                 <![CDATA[  and t1.dateTime <= #{endDate }    ]]>
+             </if>
+             <if test="station!=null and station!=''">
+                 and t1.station =#{station}
+             </if>
+             <if test="lane !=null and lane !=''">
+                 and t1.lane=#{lane }
+             </if>
+             <if test="carNum!=null and carNum!=''">
+                 and t1.carNum like '%${carNum }%'
+             </if>
+
+             <if test="axleCnt != null and axleCnt_op != null">
+                 <if test="axleCnt_op == 0">
+                     <![CDATA[ and t1.axleCnt > #{axleCnt } ]]>
+                 </if>
+                 <if test="axleCnt_op == 1">
+                     <![CDATA[ and t1.axleCnt < #{axleCnt } ]]>
+                 </if>
+                 <if test="axleCnt_op == 2">
+                     <![CDATA[ and t1.axleCnt >= #{axleCnt } ]]>
+                 </if>
+                 <if test="axleCnt_op == 3">
+                     <![CDATA[ and t1.axleCnt <= #{axleCnt } ]]>
+                 </if>
+                 <if test="axleCnt_op == 4">
+                     <![CDATA[ and t1.axleCnt = #{axleCnt } ]]>
+                 </if>
+             </if>
+
+             <if test="overRate !=null ">
+                 and t1.overLoadId = #{overRate }
+             </if>
+
+             <if test="recognition !=null ">
+                 and t1.recognition = #{recognition }
+             </if>
+
+             <if test="direction !=null ">
+                 and t1.direction = #{direction }
+             </if>
+
+             <if test="previewId !=null ">
+                 and t1.previewId = #{previewId }
+             </if>
+
+             <if test="startWeight != null">
+                 <![CDATA[ and t1.sumWeight >= #{startWeight } ]]>
+             </if>
+             <if test="endWeight != null">
+                 <![CDATA[ and t1.sumWeight <= #{endWeight } ]]>
+             </if>
+
+             <if test="overRate_op != null and overRate_num != null">
+                 <if test="overRate_op == 0">
+                     <![CDATA[ and t1.overLoadRate > #{overRate_num } ]]>
+                 </if>
+                 <if test="overRate_op == 1">
+                     <![CDATA[ and t1.overLoadRate < #{overRate_num } ]]>
+                 </if>
+                 <if test="overRate_op == 2">
+                     <![CDATA[ and t1.overLoadRate >= #{overRate_num } ]]>
+                 </if>
+                 <if test="overRate_op == 3">
+                     <![CDATA[ and t1.overLoadRate <= #{overRate_num } ]]>
+                 </if>
+                 <if test="overRate_op == 4">
+                     <![CDATA[ and t1.overLoadRate = #{overRate_num } ]]>
+                 </if>
+             </if>
+             <if test="station==null or station==''">
+                 and t1.stationMark IN
+                 <foreach collection="userStationCodes" item="stationMark" index="index"
+                          open="(" close=")" separator=",">
+                     #{stationMark}
+                 </foreach>
+             </if>
+         </where>
+         order by previewId desc LIMIT 65000) c
+	 </select>
+	
+      <!-- 删除 -->
+     <delete id="delPreview">
+         update t_preview set deleted = 1 where previewId=#{previewId}
+     </delete>
+     
+     <!-- 查询信息 -->
+     <select id="getPreviewById" resultType="Preview">
+      	 select * from t_preview where deleted = 0 and previewId =#{previewId}
+     </select>
+     
+     
+      <update id="updatePreview">
+     		  update t_preview 
+              set lane=#{lane},carNum=#{carNum},axleCnt=#{axleCnt},speed=#{speed},
+     		  sumWeight=#{sumWeight},overRage=#{overRage},overLoadRate=#{overLoadRate}
+              <if test="dateTime != null and dateTime !='' ">
+                  ,dateTime=#{dateTime}
+              </if>
+              WHERE previewId=#{previewId}
+     </update>
+</mapper>

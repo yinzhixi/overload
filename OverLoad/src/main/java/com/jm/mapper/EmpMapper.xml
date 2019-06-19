@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.EmpDao">
+
+	<select id="getAllEmpByRoleId" resultType="com.jm.bean.Emp">
+		select t1.*,t3.id from t_emp t1 LEFT JOIN t_user_role t2 ON t1.empName = 
+		t2.emp_name INNER JOIN t_role t3 ON t3.id = t2.role_id WHERE t3.id = #{id}
+	</select>
+
+
+
+	<!--  根据工号查询用户信息 -->
+	<select id="queryByJobNum" resultType="Emp">
+		select * FROM t_emp where jobNum = #{jobNum}
+	</select>
+	  
+     <!-- 查询用户信息 -->
+     <select id="selectById" resultType="Emp">
+      select * from t_emp where empName=#{empName}
+     </select>
+     
+      <!-- 查询用户信息 -->
+     <select id="selectById2" resultType="Emp">
+      select t.*,r.name from t_emp t
+      left join t_user_role ur ON ur.emp_name=t.empName
+      left join t_role r ON r.id=ur.role_id 
+      where t.id=#{id}
+     </select>
+
+
+		  <!-- 根据用户id查询所有的角色 -->
+     <select id="findAllRole" resultType="Role">
+     		 select a.id,a.name,case when b.role_id is not null then true else false end isAssign
+       from t_role a 
+       left join t_user_role b on a.id = b.role_id and b.emp_name=#{empName}
+     </select>
+
+
+     
+     <!-- 查询用户信息 -->
+     <select id="queryAll" resultType="Emp">
+       select * from t_emp
+     </select>
+     
+     
+	<!-- 查询用户信息 -->
+	<select id="getByEmpName" parameterType="String" resultType="Emp">
+	   select * from t_emp where empName=#{empName}
+	</select>
+	<!--   t1.*,t2.* t1 LEFT JOIN t_user_role t2 on t1.empName=t2.emp_name -->
+	<!-- 多条件查找 -->
+	<select id="queryE" resultType="Emp">
+	    select * from t_emp 
+	     <where>
+	          <if test="jobNum != '' and jobNum != null">
+	              and jobNum=#{jobNum}
+	          </if>
+	          <if test="empName != '' and empName !=null">
+	              and empName=#{empName}
+	          </if>
+	          <if test="isEmp != '' and isEmp !=null">
+	              and isEmp=#{isEmp}
+	          </if>
+	          <if test="stationName != '' and stationName!=null">
+	              and stationName=#{stationName}
+	          </if>
+	     </where>
+	</select>
+	
+	<!-- 新增员工信息 -->
+	<insert id="addEmp" parameterType="Emp">
+	 insert into t_emp(jobNum,empName,passWord,isEmp,stationName,salt) values(#{jobNum},#{empName},#{passWord},#{isEmp},#{stationName},#{salt})
+	</insert>
+	
+	<!-- 新增站点 -->
+	<insert id="addStation" parameterType="Station">
+	   insert into t_station(stationName) values(#{stationName})
+	</insert>
+
+	<!-- 修改前查询 -->
+    <select id="queryEmp" parameterType="int" resultType="Emp">
+        select * from t_emp where id=#{id}
+    </select>
+
+     <!-- 修改员工信息 -->
+     <update id="updateEmp">
+        update t_emp set jobNum=#{jobNum},empName=#{empName},isEmp=#{isEmp},stationName=#{stationName} where id=#{id}
+     </update>
+     
+     <!-- 删除员工 -->
+     <delete id="deleteEmp" parameterType="Emp">
+         delete from t_emp where id=#{id}
+     </delete>
+
+    <!-- 修改密码 -->
+    <update id="updatep" parameterType="Emp">
+        update t_emp set passWord=#{passWord},salt=#{salt} where jobNum=#{jobNum}
+    </update>
+    
+</mapper>

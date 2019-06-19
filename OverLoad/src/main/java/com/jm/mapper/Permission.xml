@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.PermissionDao">
+
+
+	<!-- 修改权限信息 -->
+	  <update id="updatePermission">
+      		update t_permission SET id=#{id} where name=#{name}
+     </update>
+
+	<!-- 根据角色id查询出所有的权限 -->
+	<select id="getByRoleId" resultType="Permission">
+		select s2.*,s1.* from t_permission s1 left join t_role_permission s2 
+		on s1.id=s2.permission_id where s2.role_id=#{id}    
+	</select>
+	
+	
+	<!-- 根据所有的角色id查询出所有的权限 -->
+	<!-- <select id="getAllRoles" resultType="Permission">
+		select s2.*,s1.* from t_permission s1 left join t_role_permission s2 
+		on s1.id=s2.permission_id where s2.role_id in
+		(
+		select role_id from t_role_permission where role_id in	<foreach collection="roles" open="(" separator="," close=")" item="roleId">#{roleId}</foreach>	
+		)	 
+	</select> -->
+	
+
+     <!-- 查询信息 -->
+     <select id="getAll" resultType="Permission">
+       select id,name from t_permission
+     </select>
+    
+    <!-- 新增信息 -->
+    <insert id="add" parameterType="Permission">
+     insert into t_permission(id,name,domain) values(#{id},#{name},#{domain})
+    </insert>
+    
+    <!-- 删除 -->
+     <delete id="del">
+         delete from t_permission where id=#{id}
+     </delete>
+</mapper>

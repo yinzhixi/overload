@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.TonRangeDao">
+	<resultMap type="com.jm.bean.Ton" id="a1">
+        <result column="tonId" property="tonId"/><!-- id-->
+		<result column="tonRegion" property="tonRegion"/><!-- 区间描述-->
+	</resultMap>
+
+	<select id="getAll" resultMap="a1">
+		SELECT tonId,tonRegion from t_ton
+	    order by tonId
+	</select>
+</mapper>

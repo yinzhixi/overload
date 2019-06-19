@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.FlowViewDao">
+
+	<resultMap type="com.jm.bean.FlowView" id="a1">
+        <result column="previewId" property="previewId"/><!-- id-->
+		<result column="dateTime" property="date"/><!-- 日期 -->
+        <result column="carNum" property="carNum"/><!-- 车牌 -->
+		<result column="frontPic" property="imgUrl"/><!-- 车头图片 -->
+        <result column="backPic" property="backPic"/><!-- 车头图片 -->
+        <result column="sumWeight" property="totalWeight"/><!-- 总重 -->
+		<result column="limitWeight" property="limitWeight"/>
+        <result column="overRage" property="overWeight"/><!-- 超重 -->
+        <result column="lane" property="lane"/><!-- 车道 -->
+        <result column="speed" property="speed"/><!-- 车速 -->
+        <result column="station" property="station"/><!-- 站点 -->
+        <result column="axleCnt" property="axleCnt"/><!-- 轴数 -->
+        <result column="direction" property="direction"/><!-- 车向 -->
+        <result column="relCode" property="relCode"/><!-- 图片编码 -->
+
+    </resultMap>
+
+	<select id="queryPreview" resultMap="a1">
+		SELECT previewId,carNum,dateTime,frontPic,sumWeight,overRage,limitWeight,lane,axleCnt,relCode from t_preview
+		<where>
+        deleted = 0 
+	     <if test="startDate!=null and startDate!=''">
+             <![CDATA[  and dateTime >= #{startDate }    ]]>
+         </if>
+         <if test="endDate!=null and endDate!=''">
+             <![CDATA[  and dateTime <= #{endDate }    ]]>
+         </if>
+         <if test="station!=null and station!=''">
+	         and station=#{station }
+	     </if>
+         <if test="direction!=null">
+             and direction=#{direction }
+         </if>
+         <if test="carNum!=null and carNum!=''">
+             and carNum like concat(concat('%',#{carNum}),'%')
+         </if>
+         <if test="maxId != null">
+             and previewId > #{maxId }
+         </if>
+	     </where>
+	    order by previewId desc
+	</select>
+
+    <!--根据用户站点权限查询数据-->
+    <select id="queryPreviewStation" resultMap="a1">
+        SELECT previewId,carNum,dateTime,frontPic,sumWeight,overRage,limitWeight,lane,axleCnt,relCode from t_preview
+        <where>
+            deleted = 0
+            <if test="startDate!=null and startDate!=''">
+                <![CDATA[  and dateTime >= #{startDate }    ]]>
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                <![CDATA[  and dateTime <= #{endDate }    ]]>
+            </if>
+            <if test="station!=null and station!=''">
+                and station=#{station }
+            </if>
+            <if test="direction!=null">
+            </if>
+            <if test="carNum!=null and carNum!=''">
+                and carNum like concat(concat('%',#{carNum}),'%')
+            </if>
+            <if test="maxId != null">
+                and previewId > #{maxId }
+            </if>
+            <if test="station==null or station==''">
+                and stationMark IN
+                <foreach collection="stationMarks" item="stationMark" index="index"
+                         open="(" close=")" separator=",">
+                    #{stationMark}
+                </foreach>
+            </if>
+        </where>
+        order by previewId desc
+    </select>
+	
+	<select id="queryOverRagePreview" resultMap="a1">
+        SELECT
+            t.previewId,
+            t.carNum,
+            t.dateTime,
+            t.frontPic,
+            t.backPic,
+            t.speed,
+            s.stationName AS station,
+            t.sumWeight,
+            t.overRage,
+            t.limitWeight,
+            t.lane,
+            t.axleCnt,
+            t.relCode
+        FROM
+            t_preview t
+        LEFT JOIN t_station s ON s.stationCode=t.stationMark
+		<where>
+        t.deleted = 0
+        and t.stationMark IN
+        <foreach collection="stationMarks" item="stationMark" index="index"
+                 open="(" close=")" separator=",">
+            #{stationMark}
+        </foreach>
+	     <if test="overRage == 1">
+             <![CDATA[  and t.overRage > 0    ]]>
+         </if>
+         <if test="overRage == 0">
+             <![CDATA[  and t.overRage = 0    ]]>
+         </if>
+	     </where>
+	    order by t.previewId desc
+	</select>
+    
+    <select id="queryMaxId" resultType="int">
+        select max(previewId) from t_preview where deleted = 0
+    </select>
+</mapper>

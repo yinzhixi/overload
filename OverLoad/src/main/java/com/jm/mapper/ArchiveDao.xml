@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.ArchiveDao">
+    
+    <select id="findYearMonths" resultType="java.util.HashMap">
+        SELECT year,month FROM t_preview GROUP BY year,month
+    </select>
+    
+    <select id="existsTable" resultType="java.lang.Integer">
+        SELECT COUNT(TABLE_NAME) FROM information_schema.TABLES 
+        WHERE table_name = 't_preview_${year}_${month}' and TABLE_SCHEMA = 'jm'
+    </select>
+    
+    <update id="createTable">
+         create table t_preview_${year}_${month} like t_preview;
+    </update>
+    
+    <update id="copyData">
+        insert into t_preview_${year}_${month} 
+        select * from t_preview
+        where year = ${year}
+        and month = ${month}
+        <![CDATA[  and date < #{date }    ]]>
+    </update>
+    
+    <update id="deleteDate">
+        delete from t_preview
+        where year = ${year}
+        and month = ${month}
+        <![CDATA[  and date < #{date }    ]]>
+    </update>
+    
+</mapper>

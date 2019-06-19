@@ -1,0 +1,13 @@
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('picPath', 'C:/Users/luke/Pictures/jm/out', '图片存储位置');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('archive_retain_days', '60', '数据归档 实时数据保留天数');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('notify', '1', '通知关注者');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('notify.client.id', '1', '通知client id');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('notify.server.ip', '127.0.0.1', '通知关注者服务器Ip');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('notify.server.port', '8888', '通知关注者服务器端口');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`) VALUES ('nofity.client.key', '2a0142f066a8182386602775b14eb6c534dd0ee4e8f4a79abf97976a488d66da4d2b6b734d43e7282f9bdc7e9ec46ee3b9f412602c655fe53250ce0bbeb53643');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`) VALUES ('print.page.head', '三门峡市陕州区交通运输局');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`) VALUES ('print.title', '涉嫌违章车辆记录单');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`) VALUES ('print.station.local', '三门峡市陕州区G310国道885KM+500米处（民生液化气站西200米）非现场执法检测点');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`) VALUES ('print.part', '陕州区交通运输局执法所');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('print.pic.select', '1,2,5', '打印显示图片 1前抓拍 2后抓拍 3车身抓拍 4车顶抓拍 5情报板抓拍');
+INSERT INTO `jm`.`t_systemset` (`key`, `val`, `comment`) VALUES ('print.emp.sels', '', 'empName1:12345;empName2:12346;');

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jm.dao.RolePermissionDao">
+
+
+	 <delete id="delPermission">
+         delete from t_role_permission 
+         where role_id=#{roleId}
+     </delete>
+	
+     
+     <!-- 查询信息 -->
+     <select id="get" resultType="RolePermission">
+        select role_id roleId,permission_id permissionId
+        from t_role_permission 
+        where role_id=#{roleId} and permission_id = #{permissionId}
+     </select>
+     
+    <!-- 新增信息 -->
+    <insert id="add" parameterType="RolePermission">
+     insert into t_role_permission(role_id,permission_id) values(#{roleId},#{permissionId})
+    </insert>
+    
+    <!-- 删除 -->
+     <delete id="del">
+         delete from t_role_permission 
+         where role_id=#{roleId} and permission_id = #{permissionId}
+     </delete>
+</mapper>

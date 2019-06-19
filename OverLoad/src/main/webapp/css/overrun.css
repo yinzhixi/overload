@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+}
+
+.cen{
+	margin: 0 auto;
+	text-align: center;
+	width: 1000px;
+}
+.timg{
+	 text-align: center;
+	 width: 650px;
+	
+}
+.b-label span{
+	display: inline-block;
+    width: 220px;
+    text-align: right;
+    color: #666666;
+    font-size: 14px;
+    font-weight: 500;
+}
+.ccsq-clxx{
+	width: 260px;
+	height: 30px;
+	border: none;
+	color:#666;
+	background-color: #fff;
+	padding-left: 5px;
+}
+.content{
+	margin: 30px 0px;
+	padding-left: 150px;
+	margin-top: 10px
+}
+.btn{
+	text-align: center;
+    margin: 30px 0px;
+}
+.bc{
+	width: 90px;
+    height: 40px;
+    background-color: #019ee1;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.tj{
+	width: 90px;
+    height: 40px;
+    background-color: #019ee1;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
